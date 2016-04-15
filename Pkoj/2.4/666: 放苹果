@@ -1,0 +1,23 @@
+program P666;
+var t,i:integer;
+    m,n:array[1..25]of integer;
+
+function apple(x,y:integer):longint;
+begin
+    if (x=0) or (y=1) then    //如果没苹果可分了，或只有一个盘子，都只有一种分法
+       begin
+         apple:=1;
+       end
+    else begin
+          if y>x then apple:=apple(x,x)  //如果盘子比苹果多，则必然有y-x是空的，因而最多有x个盘子可以用来放苹果，因此可以等价于apple(x,x)
+          else apple:=apple(x-y,y)+apple(x,y-1);   //否则x>=y,那么有两种情况，符合加法原则。一是有空盘子，则最多有y-1个盘子可以放苹果，所以apple(x,y-1)种分法
+         end;                                      //二是没有空盘子，那么就首先给每个盘子放一个苹果，因而，剩下的苹果数是x-y,最多的盘子数仍是y,所以是apple(x-y,y)种分法
+end;
+
+begin
+     readln(t);
+     for i:=1 to t do
+          readln(m[i],n[i]);
+     for i:=1 to t do
+         writeln(apple(m[i],n[i]));
+end.
