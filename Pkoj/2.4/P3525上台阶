@@ -1,0 +1,21 @@
+program Project1;
+var i,j,max:longint;
+    a,b:array[1..1000000]of longint;
+begin
+     i:=0;
+     repeat
+         inc(i);
+         readln(b[i]);
+     until b[i]=0;
+     max:=-1;
+     for j:=1 to i-1 do
+         if b[j]>max then max:=b[j];  //找出最大值
+     a[1]:=1;   //边界
+     a[2]:=2;   //边界
+     a[3]:=4;   //边界
+     if max>3 then
+        for j:=4 to max do //递推
+            a[j]:=a[j-1]+a[j-2]+a[j-3];
+     for j:=1 to i-1 do
+         writeln(a[b[j]]);
+end.
