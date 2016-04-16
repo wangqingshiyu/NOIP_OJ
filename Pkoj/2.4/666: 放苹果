@@ -1,3 +1,4 @@
+//递归方法
 program P666;
 var t,i:integer;
     m,n:array[1..25]of integer;
@@ -20,4 +21,30 @@ begin
           readln(m[i],n[i]);
      for i:=1 to t do
          writeln(apple(m[i],n[i]));
+end.
+
+
+// 递推方法
+program P666;
+var m,n,i,j:integer;
+    sum:array[0..50,0..50]of longint;
+begin
+     readln(m,n);
+     for i:=0 to m do    //初始化，只有一个盘子的时候，全部放在同一个盘子里，只有一种情况
+         sum[i,1]:=1;
+     for j:=0 to n do
+         sum[0,j]:=1;  //初始化，没有苹果可以分，全部都不放，也属于一种
+     for i:=1 to m do
+     begin
+         for j:=1 to n do
+         begin
+              while (i>=j) do    //当苹果数量大于盘子数时，分为有空盘子和没有空盘子两种情况
+                sum[i,j]:=sum[i,j-1]+sum[i-j,j]; //至少有一个空盘子，所以，至多有j-1个盘子，因此是将i个苹果，放在j-1个盘子里边
+                                                 //没有空盘子，那么必然每个盘子都至少有一个苹果，可以先给每个盘子发一苹果，剩下的i-j个苹果，再放到j个盘子里边
+              while (i<j) do    //当苹果数小于盘子数时，则必然有空盘子，而且至多有i个盘子可以有苹果，因此相当于将i个苹果放在i个盘子里
+                sum[i,j]:=sum[i,i];
+         end;
+     end;
+     writeln(sum[m,n]);
+   //  readln;
 end.
