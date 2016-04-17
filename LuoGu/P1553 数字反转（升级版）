@@ -1,0 +1,83 @@
+program P1553;
+var s:string;
+    len,i,t:integer;
+
+function pz(st:string):string;    //整数
+var ss:string;
+begin
+     len:=length(st);
+     t:=len;
+     while (st[t]='0') and (t>1) do
+     begin
+          dec(t);
+     end;
+     ss:='';
+     for i:=t downto 1 do
+         ss:=ss+st[i];
+     pz:=ss;
+
+
+end;
+
+function px(st:string):string;   //小数
+var x,y:integer;
+    s1,s2,ss:string;
+begin
+     len:=length(st);
+     x:=pos('.',s);
+     s1:=copy(st,1,x-1);
+     writeln('s1=',s1);
+     s2:=copy(st,x+1,len-x);
+     writeln('s2=',s2);
+     ss:='';
+     ss:=pz(s1)+'.'+pz(pz(pz(s2)));  // 小数部分，如果是.00321,结果应该是.123,所以多次翻转，把0去掉
+    // writeln('ss=',ss);
+     px:=ss;
+
+
+end;
+function pf(st:string):string;   //分数
+var x,y:integer;
+    s1,s2,ss:string;
+begin
+     len:=length(st);
+     x:=pos('/',s);
+     s1:=copy(st,1,x-1);
+    // writeln('s1=',s1);
+     s2:=copy(st,x+1,len-x);
+    // writeln('s2=',s2);
+     ss:='';    //初始化，不能少，否则会出错
+     ss:=pz(s1)+'/'+pz(s2);
+    // writeln('ss=',ss);
+     pf:=ss;
+
+
+end;
+function pb(st:string):string;    //百分数
+var x:integer;
+    s1,ss:string;
+begin
+     len:=length(st);
+     x:=pos('%',s);
+     s1:=copy(st,1,x-1);
+    // writeln('s1=',s1);
+     ss:='';    //初始化，不能少，否则会出错
+     ss:=pz(s1)+'%';
+    // writeln('ss=',ss);
+     pb:=ss;
+
+
+end;
+
+begin
+     readln(s);
+     if (pos('.',s)=0) and (pos('/',s)=0) and (pos('%',s)=0)  then   //整数
+        writeln(pz(s));
+     if pos('.',s)>0 then          //小数
+        writeln(px(s));
+     if pos('/',s)>0 then          //分数
+        writeln(pf(s));
+     if pos('%',s)>0 then          //百分数
+        writeln(pb(s));
+    // readln;
+end.
