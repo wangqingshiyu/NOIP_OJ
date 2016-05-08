@@ -1,0 +1,68 @@
+program p1036;
+var n,k,i,count:integer;
+    x:array[1..25]of longint;
+    b:array[1..25]of boolean;
+
+procedure print(sum:longint);
+var a:array[1..25]of longint;
+    i,j:integer;
+begin
+     inc(count);
+     j:=1;
+     for i:=1 to n do
+         if b[i]=false then
+         begin
+              a[j]:=x[i];
+              inc(j);
+         end;
+     for i:=1 to k-1 do
+         write(a[i],'+');
+     write(a[k],'=',sum);
+     writeln;
+end;
+
+function pd(ss:longint):boolean;
+var i:integer;
+begin
+    pd:=true;
+    for i:=2 to trunc(sqrt(ss))+1 do
+    begin
+         if ss mod i=0 then
+         begin
+              pd:=false;
+              break;
+         end;
+    end;
+end;
+
+procedure search(t:integer;s:longint);
+var i:integer;
+begin
+    if t>k then
+    begin
+         if pd(s) then print(s);
+         exit;
+    end;
+    for i:=1 to n do
+    begin
+         if b[i] then
+         begin
+             b[i]:=false;
+             search(t+1,s+x[i]);
+             b[i]:=true;
+         end;
+    end;
+end;
+
+begin
+    readln(n,k);
+    for i:=1 to n do
+        read(x[i]);
+    fillchar(b,sizeof(b),true);
+    count:=0;
+    search(1,0);     // 第i个数，后边的参数为前i-1个数之和
+    writeln('---------------');
+    writeln(count);
+    readln;
+    readln;
+end.
