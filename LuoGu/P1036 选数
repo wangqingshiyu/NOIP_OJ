@@ -1,68 +1,48 @@
 program p1036;
-var n,k,i,count:integer;
-    x:array[1..25]of longint;
-    b:array[1..25]of boolean;
+const maxn=20;
+var i,k,n,count:longint;
+    a,c:array[1..maxn]of longint;
+    b:array[1..maxn]of boolean;
 
-procedure print(sum:longint);
-var a:array[1..25]of longint;
-    i,j:integer;
-begin
-     inc(count);
-     j:=1;
-     for i:=1 to n do
-         if b[i]=false then
-         begin
-              a[j]:=x[i];
-              inc(j);
-         end;
-     for i:=1 to k-1 do
-         write(a[i],'+');
-     write(a[k],'=',sum);
-     writeln;
-end;
-
-function pd(ss:longint):boolean;
-var i:integer;
+function pd(s:longint):boolean;
+var i:longint;
 begin
     pd:=true;
-    for i:=2 to trunc(sqrt(ss))+1 do
-    begin
-         if ss mod i=0 then
-         begin
-              pd:=false;
-              break;
-         end;
-    end;
+    for i:=2 to trunc(sqrt(s)) do
+        if s mod i =0 then
+           exit(false);
 end;
 
-procedure search(t:integer;s:longint);
-var i:integer;
+procedure search(t,p,sum:longint); //t表示第几个数，p表示当前的位置,sum表示是和
+var i:longint;
 begin
-    if t>k then
-    begin
-         if pd(s) then print(s);
+     if t>k then
+     begin
+         if pd(sum) then
+            inc(count);
          exit;
-    end;
-    for i:=1 to n do
-    begin
-         if b[i] then
-         begin
-             b[i]:=false;
-             search(t+1,s+x[i]);
-             b[i]:=true;
-         end;
-    end;
+     end;
+     for i:=p to n do
+     begin
+          if b[i] then
+          begin
+              c[t]:=a[i];
+              b[i]:=false;
+              search(t+1,i+1,sum+c[t]);
+              b[i]:=true;
+          end;
+     end;
 end;
 
 begin
-    readln(n,k);
-    for i:=1 to n do
-        read(x[i]);
-    fillchar(b,sizeof(b),true);
-    count:=0;
-    search(1,0);     // 第i个数，后边的参数为前i-1个数之和
-    writeln('---------------');
-    writeln(count);
-    readln;
-    readln;
+     readln(n,k);
+     for i:=1 to n do
+         read(a[i]);
+     fillchar(b,sizeof(b),true);
+     count:=0;
+     search(1,1,0);
+     writeln(count);
+     readln;
+     readln;
 end.
+
