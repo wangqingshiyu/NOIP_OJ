@@ -1,0 +1,52 @@
+program P1094;
+const maxn=5000;
+var n,m,i,count,sum:longint;
+    a,p:array[1..maxn]of longint;
+
+procedure qsort(l,r:longint);  // 以价格p为基准，从小到到排序
+var i,j:longint;
+    mid,t:longint;
+begin
+    i:=l;j:=r;
+    mid:=p[(i+j)div 2];
+    repeat
+         while p[i]< mid do inc(i);
+         while p[j]> mid do dec(j);
+         if i<=j then
+         begin
+             t:=p[i];p[i]:=p[j];p[j]:=t;
+             t:=a[i];a[i]:=a[j];a[j]:=t;
+             inc(i);dec(j);
+         end;
+    until i>j;
+    if i<r then qsort(i,r);
+    if l<j then qsort(l,j);
+
+end;
+
+begin
+     readln(n,m);
+     for i:=1 to m do
+     begin
+         readln(p[i],a[i]);
+     end;
+     qsort(1,m);
+     sum:=0;count:=n;
+     i:=1;
+     while (count>0) and (i<=m) do
+     begin
+          if (count-a[i]>=0) then
+          begin
+               sum:=sum+a[i]*p[i];
+               count:=count-a[i];
+          end
+          else begin
+               sum:=sum+count*p[i];
+               count:=0;
+          end;
+          inc(i);
+     end;
+     writeln(sum);
+   //  readln;
+   //  readln;
+end.
