@@ -1,0 +1,45 @@
+program p1068;
+const maxn=5000;
+      maxm=5000;
+var m,n,i:integer;
+    num,cj:array[1..maxn]of integer;
+
+procedure qsort(l,r:integer);   //多关键字快排
+var i,j,mid1,mid2,p:integer;
+begin
+    i:=l;
+    j:=r;
+    mid1:=cj[(i+j)div 2];
+    mid2:=num[(i+j)div 2];
+    while (i<=j) do
+    begin
+         while (cj[i]>mid1) or ((cj[i]=mid1) and (num[i]<mid2)) do inc(i);  //第一关键词大于基准或第一关键词等于基准时，第二关键词小于第二基准
+         while (cj[j]<mid1) or ((cj[j]=mid1) and (num[j]>mid2)) do dec(j);
+         if i<=j then
+         begin
+              p:=cj[i];
+              cj[i]:=cj[j];
+              cj[j]:=p;
+              p:=num[i];
+              num[i]:=num[j];
+              num[j]:=p;
+              inc(i);
+              dec(j);
+         end;
+    end;
+    if l<j then qsort(l,j);
+    if i<r then qsort(i,r);
+end;
+
+begin
+    readln(n,m);
+    for i:=1 to n do
+        readln(num[i],cj[i]);
+    qsort(1,n);
+    m:=trunc(m*1.5);
+    while (cj[m]=cj[m+1]) and (m<n) do    //判断是否有重复的
+          inc(m);
+    writeln(cj[m],' ',m);
+    for i:=1 to m do
+        writeln(num[i],' ',cj[i]);
+end.
