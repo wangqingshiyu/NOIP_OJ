@@ -1,0 +1,36 @@
+//题目提示，数字会很大，只要想到用字符串，就可以实现了。
+program p1781;
+var n,i,k:integer;
+    s:array[1..25]of string;
+    len:array[1..25]of integer;
+
+begin
+    readln(n);
+    for i:=1 to n do
+    begin
+       readln(s[i]);
+       len[i]:=length(s[i]);
+    end;
+    len[25]:=len[1]; //len max
+    s[25]:=s[1];     // s max 进行初始化
+    for i:=2 to n do
+    begin
+         if len[i]>len[25] then    //位数长的，肯定比较大
+         begin
+              len[25]:=len[i];
+              s[25]:=s[i];
+              k:=i;
+         end
+         else if len[i]=len[25] then //位数相等在，比较字符串大小
+              begin
+                   if s[i]>s[25] then
+                   begin
+                      s[25]:=s[i];
+                      k:=i;
+                   end;
+              end;
+    end;
+    writeln(k);
+    writeln(s[k]);
+    //readln;
+end.
