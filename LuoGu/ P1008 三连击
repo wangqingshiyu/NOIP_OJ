@@ -1,0 +1,34 @@
+program P1008;
+var  i,j:integer;
+     pd:array[1..9]of boolean; //判断数字是否使用过，使用过为true,否则为flase;
+     t:boolean;
+
+procedure fl(x:integer);    //分离得到百十个位
+var g,s,b:integer;
+begin
+     b:=x div 100;           // 百位
+     s:=x div 10 mod 10;     //十位
+     g:=x mod 10;            //个位
+     pd[b]:=true;            //使用过的，记为true;
+     pd[s]:=true;
+     pd[g]:=true;
+end;
+
+begin
+for i:=123 to 334 do
+    begin
+         writeln('Num: ',i);
+         fillchar(pd ,sizeof(pd),false);// 初始化，9个数都未使用过
+         fl(i);
+         fl(2*i);
+         fl(3*i);
+         t:=true;
+         for j:=1 to 9 do         //只要出现有为flase的，表示有些数值没被使用，那么就表示有些数值被重复使用
+            t:=t and pd[i];
+         if t then
+            writeln(i,' ',2*i,' ',3*i);
+    end;
+readln;
+readln;
+end.
+          
