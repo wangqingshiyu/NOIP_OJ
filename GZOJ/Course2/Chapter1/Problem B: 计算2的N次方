@@ -1,0 +1,41 @@
+//不用字符串，直接用数字数组计算，模拟字符串，保存长度，倒序输出
+#include <iostream>
+#include <cstring>
+using namespace std;
+int a[1000], b[1000], c[1000];
+
+void BigAdd(){
+	int x = a[0]>b[0] ? a[0]:b[0];
+	int jw = 0; // 进位 
+	for(int i=1; i<=x; i++){
+		c[i] = a[i]+b[i]+jw;
+		jw = c[i]/10;
+		c[i] %= 10;
+	}
+	if(jw>0){
+		c[++x] = jw;
+	}
+	c[0] = x;	
+}
+
+int main(){
+	int n;
+	cin >> n;
+	if(n==1){
+		cout << "2";
+		return 0;
+	}
+	a[0] = 1; //长度 
+	a[1] = 2; //数字，倒序的
+	b[0] = 1;
+	b[1] = 2; 
+	for(int i=1; i<n; i++){
+		BigAdd();
+		memcpy(a, c, sizeof(b));
+		memcpy(b, c, sizeof(c));
+	}
+	// 倒序输出
+	for(int i=c[0]; i>=1; i--)
+		cout << c[i]; 
+	return 0;
+}
