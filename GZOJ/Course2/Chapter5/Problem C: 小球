@@ -1,0 +1,19 @@
+// 贪心策略在于 2e 与 c+d 比较，选择大的
+#include <iostream>
+using namespace std;
+int main(){
+	int r, b, c, d, e, sum = 0;
+	cin >> r >> b >> c >> d >> e;
+	int x, y;
+	if(2*e > c+d){ // 交换放会比较好 
+		if(r>b)
+			sum = (r-b)*c+2*b*e; // 多余的红球得分+交换得分，交换的数量为全部蓝球数量的两倍
+		else
+			sum = (b-r)*d+2*r*e; // 多余的蓝球得分+交换得分，交换的数量为全部红球数量的两倍
+	}
+	else{ // 不交换比较好 
+		sum = r*c+b*d;
+	}
+	cout << sum;
+	return 0;
+}
