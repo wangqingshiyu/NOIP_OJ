@@ -1,0 +1,19 @@
+#include <iostream>
+#include <algorithm>
+#include <cstdio>
+const int maxn = 1000000;
+int a[maxn+10];
+using namespace std;
+int main(){
+	int n, d;
+	long long sum = 0;
+	scanf("%d", &n);
+	scanf("%d", &a[0]);
+	for(int i=1; i<n; i++){
+		scanf("%d", &a[i]);
+		d = a[i]>a[i-1] ? a[i]:a[i-1];
+		sum += d;
+	}
+	printf("%ld", sum);
+	return 0;
+}
