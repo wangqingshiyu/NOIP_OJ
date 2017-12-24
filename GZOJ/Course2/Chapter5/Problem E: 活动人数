@@ -1,0 +1,19 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main(){
+	int n, l, k;
+	cin >> n >> l >> k;
+	int a[1010];
+	for(int i=0; i<n; i++)
+		cin >> a[i];
+	sort(a, a+n);
+	int ans = 0, t = 0;
+	while(t<n && l>=a[t]){
+		ans ++;
+		l += k;
+		t ++;
+	}
+	cout << ans;
+	return 0;
+}
