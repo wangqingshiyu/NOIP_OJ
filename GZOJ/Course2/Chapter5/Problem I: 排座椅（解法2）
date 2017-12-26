@@ -1,0 +1,63 @@
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+struct w{
+    int count;
+    int num; //记录第几行或列 
+    w(){ //构造函数，初始化为0 
+        count=0;
+    }
+};
+struct w a[1010], b[1010];
+
+bool cmp(w x, w y){ // 贪心法求讲话最多的人 
+    if(x.count!=y.count)
+        return x.count>y.count;
+    return x.num<y.num;
+} 
+
+bool cmp1(w x, w y){ //重新排回原来的顺序编号 
+    return x.num<y.num;
+}
+
+int main(){
+//	freopen("data.txt","r",stdin);
+    int m, n, k, l, d;
+    cin>>m>>n>>k>>l>>d;
+    int x1, y1, x2, y2;
+    for(int i=1; i<=d; i++){ //记录是行还是列 
+        scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
+        if(x1-x2==1 || x2-x1==1){ // 行 
+            if(x1-x2==1){
+                a[x2].num=x2;
+                a[x2].count++;
+            }
+            else{
+                a[x1].num=x1;
+                a[x1].count++;	
+            }
+        }
+        else{  // 列 
+            if(y1-y2==1){
+                b[y2].num=y2;
+                b[y2].count++;
+            }
+            else{
+                b[y1].num=y1;
+                b[y1].count++;	
+            }		
+        }
+    }
+    sort(a+1, a+m+1, cmp);
+    sort(b+1, b+n+1, cmp);
+    sort(a+1, a+k+1, cmp1);
+    sort(b+1, b+l+1, cmp1);
+    for(int i=1; i<k; i++)
+        printf("%d ", a[i].num);
+    printf("%d\n", a[k].num);
+    for(int i=1; i<l; i++)
+        printf("%d ", b[i].num);
+    printf("%d", b[l].num);
+    return 0;
+}
