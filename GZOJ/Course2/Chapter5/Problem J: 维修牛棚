@@ -1,0 +1,44 @@
+#include <algorithm>
+#include <cstdio>
+#include <string>
+#include <cstring>
+using namespace std;
+const int maxn = 1010;
+
+struct Room{
+	int s[maxn]; 
+	int d;   //距离下一个的长度 
+}r[maxn];
+
+bool cmp(Room x, Room y){
+	if(x.d == y.d)
+		return x.s[0]<y.s[0];
+	return x.d>y.d; //距离大的排前面 
+}
+
+int main(){
+	int m, c;
+	int a[maxn];
+	scanf("%d %d", &m, &c);
+	for(int i=0; i<c; i++)
+		scanf("%d", &a[i]);
+	sort(a, a+c); //从小到大排序 
+	int k = 1, t = 0;
+	r[k].s[t++] = a[0];
+	for(int i=1; i<c; i++){  
+		if(a[i] == a[i-1]+1)
+			r[k].s[t++] = a[i];
+		else{
+			r[k].d = a[i]-a[i-1]-1;
+			t = 0;
+			r[++k].s[t++] = a[i];
+		}
+	} //最后一个数没有距离d
+	sort(r+1, r+k, cmp);
+	int ans = a[c-1]-a[0]+1; //未中断的长度 
+	for(int i=1; i<m && i<=k; i++){ //每中断一次，减少一次中间的距离 
+		ans -= r[i].d;
+	}
+	printf("%d", ans);
+	return 0;	
+}
