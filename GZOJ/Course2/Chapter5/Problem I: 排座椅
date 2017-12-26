@@ -1,0 +1,81 @@
+//本题要特别注意细节，尤其是输出的细节，不是按照多的顺序来输出，而是从小到大输出
+#include <iostream>
+#include <algorithm>
+#include <cstdio>
+#include <cstring> 
+using namespace std;
+const int maxn = 1000;
+
+struct Zw{
+	int num;
+	int count; 
+};
+Zw a[maxn+10], b[maxn+10];
+
+bool cmp(Zw x, Zw y){
+	if(x.count == y.count)
+		return x.num<y.num;
+	return x.count>y.count;
+}
+
+void out(int a[], int m, int k){
+	
+}
+
+int main(){
+//	freopen("input.in", "r", stdin);
+	for(int i=1; i<=maxn; i++){ //初始化 
+		a[i].num = i;
+		a[i].count = 0;
+		b[i].num = i;
+		b[i].count = 0;
+	}
+	int m, n, k, l, d;
+	scanf("%d %d %d %d %d", &m, &n, &k, &l, &d);
+	int x, y, p, q, t, i;
+	for(i=1; i<=d; i++){
+		scanf("%d %d %d %d", &x, &y, &p, &q);
+		if(x==p){//同一行,则代表某一列之间有人讲话 
+			t = y<q ? y:q; //t取小的值
+			b[t].count ++;
+		}
+		else{ //否则是同一列，则代表某一行之间有人讲话 
+			t = x<p ? x:p;
+			a[t].count ++;
+		}
+	}
+	sort(a+1, a+m+1, cmp);
+	sort(b+1, b+n+1, cmp);
+	// 行 
+	bool c[maxn+10];
+	memset(c, 0, sizeof(c));
+	for(int i=1; i<=k; i++)
+		c[a[i].num] = true;
+	bool first = true;
+	for(int i=1; i<=m; i++){
+		if(c[i]){
+			if(first){
+				first = false;
+				printf("%d", i);
+			}
+			else
+				printf(" %d", i);
+		}
+	}
+	// 列 
+	memset(c, 0, sizeof(c));
+	for(int i=1; i<=l; i++)
+		c[b[i].num] = true;
+	first = true;
+	for(int i=1; i<=m; i++){
+		if(c[i]){
+			if(first){
+				first = false;
+				printf("\n%d", i);
+			}
+			else
+				printf(" %d", i);
+		}
+	}
+	return 0;
+}
