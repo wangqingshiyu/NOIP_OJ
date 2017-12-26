@@ -8,7 +8,7 @@ struct Person{
 		if(s-w<0)
 			return 0;
 		else return s-w;
-	};
+	}
 	int end(){ //区间结束点 
 		return s+w;	
 	}
