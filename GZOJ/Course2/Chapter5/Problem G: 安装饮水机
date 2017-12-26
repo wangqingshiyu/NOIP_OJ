@@ -1,0 +1,42 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+struct Person{
+	int s, w;
+	int start(){ //区间开始点 
+		if(s-w<0)
+			return 0;
+		else return s-w;
+	};
+	int end(){ //区间结束点 
+		return s+w;	
+	}
+}p[1010];
+
+bool cmp(Person x, Person y){
+	if(x.end() == y.end())
+		return x.s<y.s;
+	return x.end()<y.end();
+}
+
+int main(){
+	int n, i;
+	cin >> n;
+	for(i=0; i<n; i++)
+		cin >> p[i].s >> p[i].w;
+	sort(p, p+n, cmp);
+	int ans = 0;
+	i = 0;
+	int t;
+	while(i<n){ //区间最早结束的地方需要加饮水机 
+		t = i;
+		ans ++;
+		i ++;
+		while(p[i].start()<=p[t].end()){ //区间有饮水机，跳过该点 
+			i ++;
+		}		
+	}
+	cout << ans;
+	return 0;
+}
