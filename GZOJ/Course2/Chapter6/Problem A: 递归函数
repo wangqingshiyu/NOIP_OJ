@@ -1,0 +1,34 @@
+// 记忆化递归
+#include <iostream>
+#include <cstdio>
+using namespace std;
+const int maxn = 25;
+int fun[maxn][maxn][maxn];
+int f(int a, int b, int c){
+	 if(a<=0 || b<=0 || c<=0){
+	 	fun[0][0][0] = 1;
+	 	return fun[0][0][0];
+	 }
+	 if(a>20 || b>20 || c>20){
+	 	if(fun[20][20][20] == 0) // fun[20][20][20]初始值为0 
+		 	fun[20][20][20] = f(20, 20, 20);
+	 	return fun[20][20][20];
+	 }
+	 if(fun[a][b][c] == 0){
+	 	if(a<b && b<c) 
+		 	fun[a][b][c] = f(a,b,c-1)+f(a,b-1,c-1)-f(a,b-1,c);
+		else
+			fun[a][b][c] = f(a-1,b,c)+f(a-1,b-1,c)+f(a-1,b,c-1)-f(a-1,b-1,c-1);
+	 }
+	 return fun[a][b][c];
+}
+
+int main(){
+	int x, y, z;
+	while(cin >> x >> y >> z){
+		if(x == -1 && y == -1 && z == -1)
+			break;
+		printf("w(%d, %d, %d) = %d\n", x, y, z, f(x, y, z));
+	}
+	return 0;
+}
