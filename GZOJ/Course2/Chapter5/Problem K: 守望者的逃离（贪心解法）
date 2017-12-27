@@ -1,0 +1,55 @@
+//因为回蓝加闪烁的速度比跑的速度要快，因此贪心想法：尽可能多的闪烁 
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+int main(){
+	int m, st, time;
+	cin >> m >> st >> time;
+	int s = 0, t = 0;
+	while(m>=10 && t<time && s<=st){ //先闪烁 
+		s += 60;
+		t ++;
+		m -= 10;
+	}
+	if(s >= st){ //光闪烁就可以逃离 
+		printf("Yes\n");
+		printf("%d", t);
+		return 0;
+	} //后面相当于else 
+	while(s<st && t<time){
+		if((time-t<4 && m<2 || st-s<68) || (time-t<3 && m<6 || st-s<51) || (time-t<2 && m<10 || st-s<34)){//回蓝加闪烁时间不够 
+			int temp; //剩下路程需要的时间 
+			if((st-s)%17 == 0)
+				temp = (st-s)/17;
+			else
+				temp = (st-s)/17+1;
+			s += 17*(time-t);
+			if(s >= st || temp <= time-t){
+				s = st;
+				t += temp;
+			}	 
+			break;
+		}
+		else{ //闪烁比较快 
+			if(m>=10){
+				m -= 10;
+				t ++;
+				s += 60;
+			}
+			else{
+				m += 4;
+				t ++;
+			}
+		}
+	}
+	if(t<=time && s>=st){
+		printf("Yes\n");
+		printf("%d", t);
+	}
+	else{
+		printf("No\n");
+		printf("%d", s);
+	}
+	return 0;
+}
