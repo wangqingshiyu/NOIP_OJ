@@ -1,0 +1,22 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+long long k = 0;
+
+void move(char a, char b, char c, int t){
+	if(t == 1){
+		printf("%lld %c->%c\n", ++k, a, b);
+	}
+	else{
+		move(a, c, b, t-1);
+		move(a, b, c, 1);
+		move(c, b, a, t-1);
+	}
+}
+
+int main(){
+	int n;
+	scanf("%d", &n);
+	move('A', 'C', 'B', n);
+	return 0;
+}
