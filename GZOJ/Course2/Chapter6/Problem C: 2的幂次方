@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+string zh(long long x){
+	string st = "";
+	while(x != 0){
+		st += x%2+'0';
+		x /= 2;
+	}
+	return st;
+}
+
+void f(long long x){
+	if(x == 0)
+		return ;
+	if(x == 1){
+		cout << "2(0)";
+		return;
+	}
+	if(x == 2){
+		cout << "2";
+		return;
+	}
+	if(x == 3){
+		cout << "2+2(0)";
+		return;
+	}
+	// x>=4 开始
+	string s = zh(x);  //倒序的 
+	int len = s.size();
+	int k = 0; //统计1的个数 
+	for(int i=0; i<len; i++)
+		if(s[i] == '1')
+			k ++;
+	for(int i=len-1; i>=2; i--){
+		if(s[i] == '1'){
+			k --;
+			cout << "2(";
+			f(i);
+			cout << ")";
+			if(k>0)
+				cout << "+";
+		}
+	}
+	if(s[1] == '1'){
+		k --;
+		f(2);
+		if(k>0)
+			cout << "+";
+	}
+	if(s[0] == '1')
+		f(1);
+	return ;
+}
+
+int main(){
+	long long n;
+	cin >> n;
+	f(n);
+	return 0;
+}
