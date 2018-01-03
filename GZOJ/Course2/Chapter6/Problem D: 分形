@@ -1,0 +1,42 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+char s[1000][1000];
+
+void f(int n, int x, int y){
+	if(n == 1){
+		s[x][y] = 'X';
+		return ;
+	}
+	int m = 1;
+	for(int i=1; i<=n-2; i++) // n-1时的数量 
+		m *= 3;
+	f(n-1, x, y);       //左上 
+	f(n-1, x, 2*m+y);   //右上
+	f(n-1, m+x, m+y);	//中间
+	f(n-1, 2*m+x, y);   //左下
+	f(n-1, 2*m+x, 2*m+y); //右下 
+}
+
+int main(){
+	for(int i=1; i<1000; i++)
+		for(int j=1; j<1000; j++)
+			s[i][j] = ' ';
+	int n, m;
+	cin >> n;
+	while(n != -1){
+		f(n, 1, 1);  //分裂为n, 起点是位置(1, 1) 
+		m = 1;
+		for(int i=1; i<=n-1; i++)
+			m *= 3;
+		for(int i=1; i<=m; i++){
+			for(int j=1; j<=m; j++)
+				cout << s[i][j];
+			cout << endl;
+		}
+		cout << "-" << endl;
+		cin >> n;	
+	}
+	
+	return 0;
+}
