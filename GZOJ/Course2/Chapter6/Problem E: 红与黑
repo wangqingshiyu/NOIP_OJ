@@ -1,0 +1,53 @@
+// 染色法
+#include <iostream>
+#include <cstring>
+using namespace std;
+int w, h;
+char s[25][25];
+int b[25][25];
+int c[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+bool pd(int x, int y){
+	if(x>h || x<1 || y>w || y<1 || s[x][y] == '#' || b[x][y] == 1)
+		return false;
+	else
+		return true;
+}
+
+void f(int x, int y){
+	if(!pd(x, y))
+		return ;
+	b[x][y] = 1;
+	for(int i=0; i<4; i++){
+		int tx = x+c[i][0];
+		int ty = y+c[i][1];
+		if(pd(tx, ty)){
+			f(tx, ty);
+		}		
+	}
+	return;
+}
+
+int main(){
+	cin >> w >> h;
+	while(w != 0 && h != 0){
+		memset(b, 0, sizeof(b));
+		int dx, dy, ans = 0;
+		for(int i=1; i<=h; i++)
+			for(int j=1; j<=w; j++){
+				cin >> s[i][j];
+				if(s[i][j] == '@'){ // 记录起点 
+					dx = i;
+					dy = j;
+				}
+			}
+		f(dx, dy);
+		for(int i=1; i<=h; i++)
+			for(int j=1; j<=w; j++)
+				if(b[i][j] == 1)
+					ans ++;
+		cout << ans << endl;
+		cin >> w >> h;
+	}
+	return 0;
+}
