@@ -1,0 +1,81 @@
+/*解题思路：
+  （1）直接暴力搜索（dsf），肯定能拿部分分，但是当n>10时，就会超时，不是正确解。
+   (2) 数学递归，反向思维。既然正面求解很难，我们就用所有情况减去不符合的情况就可以了。
+      n封信中，所有可能的情况，就是全排列，即A(n, n)，也就是n!。不符合的情况，分为n种，分别是1封对了（剩下n-1封不对）、2封对了（剩下n-2封不对）、
+      3封对了（剩下n-3封不对）...，直到n封都对了（全对，只有一种），用数学式子表示起来，即是：f(n) = n!-c(n,1)*f(n-1)-c(n,2)*f(n-2)-....c(n,2)*f(2)-1
+*/
+/*dsf(非正解)
+#include <iostream>
+using namespace std;
+bool book[100];  // 默认false
+int ans; 
+int a[100];
+void dsf(int x, int n){
+	if(x == n+1){
+		ans ++;
+		/* 打印查看 
+		for(int i=1; i<=n; i++)
+			cout << a[i] << " ";
+		cout << endl;
+		*/
+		return;
+	}
+	for(int i=1; i<=n; i++){
+		if(!book[i] && i != x){
+			book[i] = true;
+			a[x] = i;
+			dsf(x+1, n);
+			book[i] = false;
+		}
+	}
+}
+
+int main(){
+	int n;
+	cin >> n;
+	for(int i=1; i<=n; i++)
+		a[i] = i;
+	if(n <= 1){ // 输入校验 
+		cout << "0";
+		return 0;
+	}
+	ans = 0;
+	dsf(1, n);
+	cout << ans;
+	return 0;
+}
+*/
+//数学递归，正解
+#include <iostream>
+using namespace std;
+
+long long jc(int x){
+	long long t = 1;
+	for(int i=2; i<=x; i++)
+		t *= i;
+	return t;
+}
+
+long long C(int x, int y){
+	return jc(x)/jc(x-y)/jc(y);
+}
+
+long long f(int n){  // f(n) = n!-C(n,1)*f(n-1)-C(n,2)*f(n-2)...-C(n,n-2)*f(2)-1。
+			// 即是：所有排列情况，减去有1封信是对的（n-1封是不对的），2封是对的(n-2封是不对的)....n封是对的 
+	if(n <= 1)
+		return 0;
+	if(n == 2)
+		return 1;
+	long long sum = jc(n);
+	for(int i=1; i<=n-2; i++)
+		sum -= C(n, i)*f(n-i);
+	sum --; // 全部正确的那一种 
+	return sum;
+}
+
+int main(){
+	int n;
+	cin >> n;
+	cout << f(n);
+	return 0;
+} 
