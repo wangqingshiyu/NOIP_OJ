@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int jc(int n){ //阶乘 
+	int t = 1;
+	for(int i=1; i<=n; i++)
+		t *= i;
+	return t;
+}
+
+int f(int r, int n){ //不考虑盒子的不同 
+	if(r == 1 && n>0) //一个盒子，只能有一种方法 
+		return 1;
+	if(r>n)  //球比盒子少，不可能放好 
+		return 0;
+	else //球比盒子多 
+		return f(r, n-1)*r+f(r-1, n-1);  //递归思想，调用放n-1个球的情况，包含两种情况：(1)放入n-1个球后，没有空盒子，那么最后一个球，可以放在任意r个盒子中；
+		                                 //（2）放入n-1个球后，有一个空盒子（只能是1个空盒子，否则不能满足题意），也即是n-1个球放在了r-1个盒子中，当然最后那个球只能放在剩下的空盒子中。
+}
+
+int main(){
+	int r, n;   // r个盒子，n个球 
+	cin >> n >> r;
+	int ans = f(r, n)*jc(r);  // 盒子是有序的，因此需要乘以 r! 
+	cout << ans;
+	return 0;
+}
