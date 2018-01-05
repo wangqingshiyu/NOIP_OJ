@@ -1,0 +1,19 @@
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+int a[100];
+int main(){
+	int n;
+	cin >> n;
+	for(int i=1; i<=n; i++)
+		a[i] = i;
+	for(int i=1; i<=n; i++)
+		printf("%d ", a[i]);
+	while(next_permutation(a+1, a+n+1)){//判断是否存在下一个排列，如果存在，返回true，不存在false。最后一个就是false,其余是true;
+		printf("\n");
+		for(int i=1; i<=n; i++)
+			printf("%d ", a[i]);
+	}
+	return 0;
+}
