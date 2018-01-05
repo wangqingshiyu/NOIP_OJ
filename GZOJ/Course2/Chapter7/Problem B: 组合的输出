@@ -1,0 +1,28 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int n, r;
+bool book[30];
+int a[30];
+void dsf(int x){
+	if(x == r+1){
+		for(int i=1; i<=r; i++)
+			printf("%3d", a[i]);
+		printf("\n");
+		return;
+	}
+	for(int i=1; i<=n; i++){
+		if(!book[i] && i>a[x-1]){
+			a[x] = i;
+			book[i] = true;
+			dsf(x+1);
+			book[i] = false;
+		}
+	}
+}
+
+int main(){
+	scanf("%d %d", &n, &r);
+	dsf(1);
+	return 0;
+}
