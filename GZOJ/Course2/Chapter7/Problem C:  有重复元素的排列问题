@@ -1,0 +1,37 @@
+#include <iostream>
+#include <cstdio>
+#include <map>
+using namespace std;
+int n;
+char a[520], c[520];
+int used[130];
+int total = 0;
+
+void dsf(int x){ //填第X个数
+	if(x == n+1){
+		total ++;
+		for(int i=1; i<=n; i++)
+			printf("%c", a[i]);
+		printf("\n");
+		return;
+	}
+	for(int i=1; i<=128; i++){ //字符范围从1~128
+		if(used[i]>0){ //只要这个字符还有，就可以填
+			a[x] = i;
+			used[i] --;
+			dsf(x+1);
+			used[i] ++;
+		}
+	}
+}
+
+int main(){
+	cin >> n;
+	for(int i=1; i<=n; i++){
+		cin >> c[i];
+		used[c[i]] ++;  //ÏÂ±ê×ªÕûÐÍ 
+	}
+	dsf(1);
+	printf("%d", total);
+	return 0;
+}
