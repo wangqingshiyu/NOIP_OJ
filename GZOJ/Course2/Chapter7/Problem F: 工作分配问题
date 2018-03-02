@@ -1,0 +1,46 @@
+//此题必须剪枝，因为题目n的范围是1-20，暴力搜索时间复杂度是n^n,即20^20，必然超时。
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int n;
+int a[100][100];
+int b[100];  //每个人选择的项目 
+bool used[100];
+int m, t; 
+
+void dfs(int x){ // x表示第几个人
+	if(x == n+1){ // 全部人都选完了
+		t = 0; //一定要初始化
+		for(int i=1; i<=n; i++)
+			t += b[i];
+		if(t<m)  //更新最小值
+			m = t;
+		return ;
+	}
+	int sum = 0; //求当前项目之和，用于剪枝
+	for(int i=1; i<x; i++)
+		sum += b[i];
+	if(sum>=m){ //如果当前项目之和都大于m，那么就没有必要再搜索下去了
+		return;
+	}
+	for(int i=1; i<=n; i++){
+		if(!used[i]){// 第i个项目 
+			b[x] = a[x][i];
+			used[i] = true;
+			dfs(x+1);
+			used[i] = false;
+		}
+	}
+}
+
+int main(){
+	scanf("%d", &n);
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=n; j++)
+			scanf("%d", &a[i][j]);
+	for(int i=1; i<=n; i++)
+		m += a[i][i];  //初始化一个数值
+	dfs(1);
+	printf("%d", m);
+	return 0;
+}
