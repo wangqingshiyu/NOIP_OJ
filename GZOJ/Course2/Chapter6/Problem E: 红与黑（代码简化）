@@ -1,0 +1,43 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+char s[25][25];
+int a[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+int w, h, ans;
+
+bool pd(int x, int y){
+	if(x<1 || x>h || y<1 || y>w || s[x][y] == '#')
+		return false;
+	return true;
+}
+
+void f(int x, int y){
+	s[x][y] = '#';
+	ans ++;
+	for(int i=0; i<4; i++){
+		int dx = x+a[i][0];
+		int dy = y+a[i][1];
+		if(pd(dx, dy))
+			f(dx, dy);
+	}
+}
+
+int main(){
+	int x, y;
+	while(cin >> w >> h){
+		if(w == 0 && h == 0)
+			return 0;
+		ans = 0;
+		for(int i=1; i<=h; i++)
+			for(int j=1; j<=w; j++){
+				cin >> s[i][j];
+				if(s[i][j] == '@'){
+					x = i;
+					y = j;
+				}
+			}
+		f(x, y);
+		cout << ans << endl;
+	}
+	return 0;
+}
