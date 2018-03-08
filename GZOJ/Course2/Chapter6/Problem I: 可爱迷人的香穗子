@@ -1,0 +1,29 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+struct s{
+	int zl, mg;
+}sp[110];
+int w, n;
+
+int f(int x, int sum, int wt){ //x是第几项，sum是当前和,wt是当前重量和 
+	if(x > n || wt >= w){
+		return sum;
+	}
+	if(wt+sp[x].zl > w){ //那么肯定不选 
+		return f(x+1, sum, wt); // 跳下一个 
+	}
+	else{ //可以选
+		return max(f(x+1, sum+sp[x].mg, wt+sp[x].zl), f(x+1, sum, wt)); //看选的数值大，还是不选的数值大，递归下去
+	}
+}
+
+int main(){
+
+	cin >> w >> n;
+	for(int i=1; i<=n; i++){
+		cin >> sp[i].zl >> sp[i].mg;
+	}
+	cout << f(1, 0, 0);
+	return 0;
+}
