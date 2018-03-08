@@ -1,0 +1,24 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int n, c;
+int a[110];
+
+int dfs(int x, int sum){
+	if(x > n)
+		return sum;
+	if(sum >= c)
+		return c;
+	if(sum+a[x] <= c) //可以选，也可以不选，挑大的
+		return max(dfs(x+1, sum+a[x]), dfs(x+1, sum));
+	else //肯定不能选
+		return dfs(x+1, sum);
+}
+
+int main(){
+	cin >> n >> c;
+	for(int i=1; i<=n; i++)
+		cin >> a[i];
+	cout << dfs(1, 0);
+	return 0;
+}
