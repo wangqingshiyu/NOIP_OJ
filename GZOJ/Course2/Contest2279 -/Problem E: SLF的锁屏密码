@@ -1,0 +1,21 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int n, ans;
+
+void dfs(int x, int sum){ //x 是第几个符号, sum是当前之和 
+	if(x==n-1){ // 只需要填n-2个 
+		if(sum==n)
+			ans++;
+		return;
+	}
+	dfs(x+1, sum+x+1); // 加法 
+	dfs(x+1, sum-x-1); // 减法 
+}
+
+int main(){
+	cin >> n;
+	dfs(1, -1);
+	cout << ans; 
+	return 0;
+}
