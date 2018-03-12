@@ -1,0 +1,45 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int n, m;
+int a[110][110];
+int tx[] = {1, 0, -1, 0};
+int ty[] = {0, 1, 0, -1};
+
+void dfs(int x, int y){
+	if(x<1 || x>n || y<1 || y>n)
+		return;
+	int t, dx, dy;
+	t = a[x][y];
+	a[x][y] = 0;
+	for(int i=0; i<4; i++){
+		dx = x+tx[i];
+		dy = y+ty[i];
+		if(a[dx][dy] == t)
+			dfs(dx, dy);
+	}
+}
+
+int main(){
+	scanf("%d%d", &n, &m);
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=n; j++)
+			scanf("%d", &a[i][j]);
+	dfs(n, m);
+	for(int j=1; j<=n; j++){ //用堆放下去的方式 
+		int k = n;
+		for(int i=n; i>=1; i--){ // 一列中，只把不为0的放下去 
+			if(a[i][j])
+				a[k--][j] = a[i][j];
+		}
+		for(int i=1; i<=k; i++) // 补充0 
+			a[i][j] = 0;
+	}
+	for(int i=1; i<=n; i++){
+		for(int j=1; j<n; j++){
+			printf("%d ", a[i][j]);
+		}
+		printf("%d\n", a[i][n]);	
+	}	
+	return 0;
+}
