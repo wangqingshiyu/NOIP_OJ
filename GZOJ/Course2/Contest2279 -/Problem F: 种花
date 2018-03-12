@@ -1,0 +1,41 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int n, m, a[20], ans;
+bool g[20][20], used[20][5];
+
+bool check(int x, int k){ //x是种第几盆花，k是第几种花 
+	for(int i=1; i<x; i++){
+		if(g[i][x] && used[i][k]){ // 与前面的花相邻且第k种已经种了 
+			return false;
+		}
+	}
+	return true;
+}
+
+void dfs(int x){ // x是种第几盆 
+	if(x>n){
+		ans++;
+		return;
+	}
+	for(int i=1; i<=4; i++){
+		if(check(x, i)){
+			used[x][i] = true; //记录第x盆花，是种第i种花 
+			dfs(x+1);
+			used[x][i] = false;
+		}
+	}
+}
+
+int main(){
+	int x, y;
+	cin >> n >> m;
+	for(int i=1; i<=m; i++){
+		cin >> x >> y;
+		g[x][y] = true; //表示它们相邻 
+		g[y][x] = true; //无向图，因此是一样的 
+	}
+	dfs(1);
+	cout << ans;
+	return 0;
+}
