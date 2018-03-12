@@ -1,0 +1,38 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int r, c, a[110][110], s[110][110];
+int tx[4] = {-1, 0, 1, 0};
+int ty[4] = {0, 1, 0, -1};
+
+int dfs(int x, int y){ 
+	if(s[x][y])
+		return s[x][y];
+	int dx, dy, t;
+	for(int i=0; i<4; i++){ // 四个方向 
+		dx = x+tx[i];
+		dy = y+ty[i];
+		if(a[dx][dy] > a[x][y]){ // //从小往大搜索，本质是一样的，为了防止边界  
+			t = dfs(dx, dy)+1;
+			if(t>s[x][y]) // 更换最大值 
+				s[x][y] = t;
+		}
+	}
+	return s[x][y];
+}
+
+int main(){
+	cin >> r >> c;
+	for(int i=1; i<=r; i++)
+		for(int j=1; j<=c; j++)
+			scanf("%d", &a[i][j]);
+	int maxlen = -1, t;
+	for(int i=1; i<=r; i++) // 暴力搜索
+		for(int j=1; j<=c; j++){
+			t = dfs(i, j);
+			if(t > maxlen)
+				 maxlen = t;
+		}
+	cout << maxlen+1; // 连本身也算一个长度 
+	return 0;
+}
