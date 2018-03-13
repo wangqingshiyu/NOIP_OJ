@@ -1,0 +1,45 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+using namespace std;
+int n, ans;
+bool b[110][210];
+char s[110][210];
+int tx[] = {1, 0, -1, 0};
+int ty[] = {0, 1, 0, -1};
+
+void dfs(int x, int y){
+	if(x<1 || x>n || y<1 || y>200)
+		return;
+	b[x][y] = false;
+	int sx, sy;
+	for(int i=0; i<4; i++){
+		sx = x+tx[i];
+		sy = y+ty[i];
+		if(b[sx][sy])
+			dfs(sx, sy);
+	}
+}
+
+int main(){
+//	freopen("test.txt", "r", stdin);
+	cin >> n;
+	gets(s[0]); //过滤换行 
+	int len[110];
+	for(int i=1; i<=n; i++){
+		gets(s[i]);
+		len[i] = strlen(s[i]);
+		for(int j=0; j<len[i]; j++)
+			if(s[i][j] >= 'a' && s[i][j] <= 'z')
+				b[i][j+1] = true;  // 调整到从1开始
+	}
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=len[i]; j++){
+			if(b[i][j]){
+				ans ++;
+				dfs(i, j); // 寻找连通块
+			}
+		}
+	printf("%d", ans);
+	return 0;
+}
