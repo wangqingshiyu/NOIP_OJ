@@ -1,0 +1,39 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int m, n, a[110][110], ans;
+
+void dfs(int x, int y){
+	a[x][y] = 0;
+	if(a[x-1][y])
+		dfs(x-1, y);
+	if(a[x+1][y])
+		dfs(x+1, y);
+	if(a[x][y+1])
+		dfs(x, y+1);
+	if(a[x][y-1])
+		dfs(x, y-1);	
+}
+
+int main(){
+	char ch;
+	cin >> m >> n;
+	for(int i=1; i<=m; i++)
+		for(int j=1; j<=n; j++){
+			cin >> ch;
+			if(ch == '0')
+				a[i][j] = 0;
+			else
+				a[i][j] = 1;
+		}
+			
+	for(int i=1; i<=m; i++)
+		for(int j=1; j<=n; j++)
+			if(a[i][j]){
+				ans ++;
+				dfs(i, j);
+			}
+				
+	printf("%d", ans);
+	return 0;
+}
