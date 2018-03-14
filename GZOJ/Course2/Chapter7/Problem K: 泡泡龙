@@ -1,0 +1,44 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int n, m, a[110][110];
+
+void fz(){
+	int t;
+	for(int j=1; j<=n; j++){ // 逐列放 
+		t = n;
+		for(int i=n; i>=1; i--){ //叠放，不是0的就放下去 
+			if(a[i][j])
+				a[t--][j] = a[i][j];
+		}
+		for(int i=1; i<=t; i++) // 补充0 
+			a[i][j] = 0;
+	}
+}
+
+void dfs(int x, int y, int k){ // x,y是坐标，k是数值 
+	a[x][y] = 0; //消掉的数字
+	if(a[x-1][y] == k)  //满足条件才递归，且不会突破边界，因为边界有一圈0
+		dfs(x-1, y, k);
+	if(a[x][y+1] == k)
+		dfs(x, y+1, k);
+	if(a[x+1][y] == k)
+		dfs(x+1, y, k);
+	if(a[x][y-1] == k)
+		dfs(x, y-1, k);	
+}
+
+int main(){
+	scanf("%d%d", &n, &m);
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=n; j++)
+			scanf("%d", &a[i][j]);
+	dfs(n, m, a[n][m]); // 搜索，寻找连通块 
+	fz();  // 重新放置 
+	for(int i=1; i<=n; i++){
+		for(int j=1; j<n; j++)
+			printf("%d ", a[i][j]);
+		printf("%d\n", a[i][n]);
+	}		
+	return 0;
+}
