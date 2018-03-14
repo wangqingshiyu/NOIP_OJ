@@ -1,0 +1,48 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int a[110], b[110], maxn, n, m;
+bool g[110][110];
+
+bool check(int x) {
+	for(int i=1; i<x; i++)
+		if(a[i] && g[i][x]) // 那个人要被选且两人冲突 
+			return false;
+	return true;
+}
+
+void dfs(int x, int k) { // x是第几个人, k是当前选人之和 
+	if(x>n) {
+		if(k > maxn) {
+			maxn = k;
+			for(int i=1; i<=n; i++)
+				b[i] = a[i];
+		}
+		return;
+	}
+	if(k+n-x+1 < maxn) //如果后面全部都选上，都还不如已有的多，剪枝
+		return ;
+	if(check(x)) { // 可选可不选 
+		a[x] = 1;
+		dfs(x+1, k+1);
+		a[x] = 0;
+		dfs(x+1, k);
+	}
+	else // 不能选 
+		dfs(x+1, k);
+}
+
+int main() {
+	scanf("%d%d", &n, &m);
+	int u, v;
+	for(int i=1; i<=m; i++) {
+		scanf("%d%d", &u, &v);
+		g[u][v] = 1; // 无向图
+		g[v][u] = 1;
+	}
+	dfs(1, 0);
+	printf("%d\n", maxn);
+	for(int i=1; i<=n; i++)
+		printf("%d ", b[i]);
+	return 0;
+}
