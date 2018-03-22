@@ -1,0 +1,46 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+char s[250];
+int ans;
+int stack[200];
+
+void doit(){
+	int i = 0, top = 0, t = 0;
+	while(s[i] != '@'){
+		switch(s[i]){
+			case '+': 
+				stack[top-2] += stack[top-1];
+				top --;
+				break;
+			case '-': 
+				stack[top-2] -= stack[top-1];
+				top --;
+				break;
+			case '*': 
+				stack[top-2] *= stack[top-1];
+				top --;
+				break;
+			case '/': 
+				stack[top-2] /= stack[top-1];
+				top --;
+				break;
+			default:
+				t = 0;
+				while(s[i] != '.'){
+					t = t*10+s[i++]-'0';
+				}
+				stack[top++] = t;
+				break;
+		}
+		i ++;	
+	}
+	ans = stack[top-1];
+}
+
+int main(){
+	cin >> s;
+	doit();
+	cout << ans;
+	return 0;
+}
