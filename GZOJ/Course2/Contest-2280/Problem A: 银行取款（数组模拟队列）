@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+int a[110], head, tail;
+char ch;
+int main(){
+	head = 0, tail = 0;
+	while(cin >> ch){
+		if(ch == 'I'){
+			cin >> a[tail];
+			tail ++;
+		}
+		if(ch == 'O'){
+			if(head < tail){
+				cout << a[head] << endl;
+				head ++;
+			}
+			else{
+				cout << "None" << endl;
+				head = tail;
+			}
+		}
+	}
+	return 0;
+}
