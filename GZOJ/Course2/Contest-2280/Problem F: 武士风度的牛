@@ -1,0 +1,60 @@
+#include <iostream>
+#include <cstdio>
+#include <queue>
+using namespace std;
+int n, m, sx, sy, dx, dy;
+bool a[160][160];
+struct cow{
+	int x, y;
+	int step;
+};
+queue <cow> q;
+int d[8][2] = {{-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}};
+
+
+int bfs(){
+	while(!q.empty()){
+		cow u = q.front();
+		q.pop();
+		for(int i=0; i<8; i++){
+			int tx = u.x+d[i][0];
+			int ty = u.y+d[i][1];
+			if(tx>0 && tx<=n && ty>0 && ty<=m && a[tx][ty]){
+				q.push((cow){tx, ty, u.step+1});
+				a[tx][ty] = false;
+				if(tx==dx && ty==dy)
+					return u.step+1;
+			}
+		}	
+	}
+}
+
+int main(){
+	cin >> m >> n;
+	char ch;
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=m; j++){
+			cin >> ch;
+			if(ch == '.')
+				a[i][j] = true;
+			if(ch == 'K'){
+				sx = i;
+			    sy = j;
+			}
+			if(ch == 'H'){
+				dx = i;
+				dy = j;
+				a[i][j] = true;
+			}	
+		}
+	if(sx==dx && sy==dy){
+		cout << "0";
+		return 0;
+	}
+	while(!q.empty())
+		q.pop();
+	q.push((cow){sx, sy, 0});
+	a[sx][sy] = false;
+	cout << bfs();
+	return 0;
+}
