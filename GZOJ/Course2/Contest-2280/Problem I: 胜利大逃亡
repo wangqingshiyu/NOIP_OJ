@@ -1,0 +1,79 @@
+/*
+要对拿不拿钥匙进行判断，拿到钥匙走的路可以和没拿钥匙的部可以多走一次，其实就可以加多一个状态，及在二维坐标的基础上，加多一个状态。
+*/
+
+#include <iostream>
+#include <queue>
+using namespace std;
+struct data{
+	int x, y, t;
+	bool key;
+};
+int n, m, tmax;
+char g[25][25];
+bool vis[25][25][2];
+int sx, sy, ex, ey, tx, ty;
+int d[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+queue <data> q;
+
+bool check(int x, int y, bool key){
+	if(x<1 || x>n || y<1 || y>m) // 边界
+		return false;
+	if(g[x][y] == '*') // 墙壁
+		return false;
+	if(g[x][y] == 'A' && key == false) // 还没拿到钥匙的门
+		return false; 
+	if(vis[x][y][key])  // 已经走过的路，包括没拿到钥匙时、拿到钥匙时
+		return false;
+	return true;
+}
+
+int bfs(){
+	data u;
+	while(!q.empty()){
+		u = q.front();
+		q.pop();
+		for(int i=0; i<4; i++){
+			tx = u.x+d[i][0];
+			ty = u.y+d[i][1];
+			if(tx == ex && ty == ey){ // 走到了目的地，返回值
+				return u.t+1;
+			}
+			bool key = u.key;
+			if(check(tx, ty, key)){
+				if(g[tx][ty] == 'a'){ // 获得钥匙 
+					key = true;
+					vis[tx][ty][1] = true;
+				}
+				q.push((data){tx, ty, u.t+1, key});
+				vis[tx][ty][key] = true;
+			}	
+		}	
+	}
+	return -1;  //出了队列，说明走不通
+}
+
+int main(){
+	cin >> n >> m >> tmax;
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=m; j++){
+			cin >> g[i][j];
+			if(g[i][j] == '@'){
+				sx = i;
+				sy = j;
+			}
+			if(g[i][j] == '^'){
+				ex = i;
+				ey = j;
+			}
+		}
+	q.push((data){sx, sy, 0, false});
+	vis[sx][sy][0] = true;
+	int ans = bfs();
+	if(ans != -1 && ans < tmax){
+		cout << ans;
+	}
+	else
+		cout << "-1";
+	return 0;
+}
