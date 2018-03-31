@@ -1,0 +1,127 @@
+/*强行模拟方法：
+ 1、先试探能否不开门就到达出口，并记录时间t1，如果不能到达，时间设为-1；
+ 2、记录拿钥匙、开门、再到出口的时间t2，如果有某段不能到达，时间设为-1；
+ 3、比较不开门的时间t1和开门的时间t2，如果t1与t2都为-1,则都无法达到；如果有能到到的路，则选择较小的时间，如果不超过魔王的时间，则可以逃跑。
+*/
+#include <iostream>
+#include <queue>
+#include <cstring>
+#include <cstdio>
+using namespace std;
+struct data {
+	int x, y;
+	int step;
+};
+queue <data> q;
+int n, m, sx, sy, yx, yy, mx, my, dx, dy, tx, ty;
+bool b[25][25], check = false;
+char ch[25][25];
+int d[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+void start() {
+	while(!q.empty())
+		q.pop();
+	memset(b, true, sizeof(b));
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=m; j++)
+			if(ch[i][j]=='*')
+				b[i][j] = false;
+}
+
+int bfs(int x, int y) {
+	while(!q.empty()) {
+		data u = q.front();
+		q.pop();
+		for(int i=0; i<4; i++) {
+			tx = u.x+d[i][0];
+			ty = u.y+d[i][1];
+			if(tx>=1 && tx<=n && ty>=1 && ty<=n && b[tx][ty]) {
+				b[tx][ty] = false;
+				q.push((data) {
+					tx, ty, u.step+1
+				});
+				if(tx==x && ty==y) {
+					return u.step+1;
+				}
+			}
+		}
+	}
+	return -1;  // 出了队列还没到达，说明路径不通
+}
+
+int main() {
+//	freopen("data.in", "r", stdin);
+	int time = 0, t;
+	memset(b, true, sizeof(b));
+	cin >> n >> m >> t;
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=m; j++) {
+			cin >> ch[i][j];
+			switch(ch[i][j]) {
+				case '@':
+					sx = i;
+					sy = j;
+					break;
+				case 'a':
+					yx = i;
+					yy = j;
+					break;
+				case 'A':
+					mx = i;
+					my = j;
+					b[i][j] = false;
+					break;
+				case '^':
+					dx = i;
+					dy = j;
+					break;
+				case '*':
+					b[i][j] = false;
+					break;
+				case '.':
+					break;
+			}
+		}
+	q.push((data) {
+		sx, sy, 0
+	});
+	b[sx][sy] = false;
+	int time1 = bfs(dx, dy);  // 不开门时的时间，也有可能走不通
+	// 开门的时间 
+	start();
+	q.push((data) {
+		sx, sy, 0
+	});
+	b[sx][sy] = false;
+	time = bfs(yx, yy);
+	if(time == -1) {
+		if(time1 != -1)	cout << time1;
+		else cout << "-1"; 
+		return 0;
+	}
+	start();
+	q.push((data) {
+		yx, yy, time
+	});
+	b[yx][yy] = false;
+	time = bfs(mx, my);
+		if(time == -1) {
+		if(time1 != -1)	cout << time1;
+		else cout << "-1"; 
+		return 0;
+	}
+	start();
+	q.push((data) {
+		mx, my, time
+	});
+	b[mx][my] = false;
+	time = bfs(dx, dy);
+	// 开门的时间 
+	if(time1 != -1 && time1<time)
+		time = time1;
+	if(t>=time && time !=-1)
+		cout << time;
+	else
+		cout << "-1";
+	return 0;
+}
