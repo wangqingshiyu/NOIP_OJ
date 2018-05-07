@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+int n, a[10010];
+int ft[10010];  // 当前这层是跳的
+int fp[10010];  // 当前这层是爬的
+
+int main(){
+	cin >> n;
+	for(int i=1; i<=n; i++)
+		cin >> a[i];
+	ft[1] = ft[2] = 0;  // 可以跳一层或两层
+	fp[1] = a[1];    // 只能跳一层
+	fp[2] = a[2];    // 只能跳一层
+	for(int i=3; i<=n; i++){
+		ft[i] = min(fp[i-1], fp[i-2]);    // 选跳的最小值，跳之前一定是爬的
+		fp[i] = min(ft[i-1]+a[i], fp[i-1]+a[i]);  // 选爬的最小值，爬之前可以跳可以爬
+	}
+	cout << min(ft[n], fp[n]);
+	return 0;
+}
