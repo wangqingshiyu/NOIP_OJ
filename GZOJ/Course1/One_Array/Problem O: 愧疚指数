@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+int a[200001];
+int main(){
+	int n, b, c, d, x;
+	cin >> n;
+	b = c = d = 0;
+	for(int i=1; i<=n; i++){
+		cin >> a[i];
+		if(a[i]==1)
+			b++;   // 统计1的个数 
+		if(a[i]==2)
+			c++;   // 统计2的个数 
+		if(a[i]==3)
+			d++;  // 统计3的个数 
+	}
+	for(int i=1; i<n; i++){
+		if(a[i]==1){  
+			cout << "0 "; // 没有惭愧的数 
+			b--;  // 1的个数减少1个 
+		}
+		if(a[i]==2){  
+			cout << b << " "; // 只有后面的1才让他惭愧 
+			c--; // 2的个数减少1个 
+		}
+		if(a[i]==3){   
+			cout << b+c << " "; // 只有后面的1和2让他惭愧
+			d--; // 3的个数减少1个，但是其实没有意义，不影响结果 
+		}
+	}	
+	cout << "0";  // 最后的数不会惭愧 
+	return 0;
+}
