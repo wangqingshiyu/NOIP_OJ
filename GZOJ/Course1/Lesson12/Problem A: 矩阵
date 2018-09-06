@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+	int a[110][110], n, m;
+	cin >> n >> m;
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=m; j++)
+			cin >> a[i][j];
+	int maxn = abs(a[1][1]); // 初始化，假设a[1][1]绝对值最大
+	int x = 1, y = 1;        // 初始化，记录x,y
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=m; j++){
+			if(abs(a[i][j])>maxn){
+				maxn = abs(a[i][j]);
+				x = i;
+				y = j;
+			}
+		}
+	cout << a[x][y] << endl;
+	cout << x-1 << " " << y-1;  // 行列从0开始算起
+	return 0;
+}
