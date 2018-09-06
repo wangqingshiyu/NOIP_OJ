@@ -10,7 +10,7 @@ int main(){
 	int x = 1, y = 1;        // 初始化，记录x,y
 	for(int i=1; i<=n; i++)
 		for(int j=1; j<=m; j++){
-			if(abs(a[i][j])>maxn){
+			if(abs(a[i][j])>=maxn){  // 相同取后面的行、列，所以可以取等于
 				maxn = abs(a[i][j]);
 				x = i;
 				y = j;
