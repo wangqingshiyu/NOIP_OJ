@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+	bool a[110];  // 判断是否出圈
+	int n, m;
+	memset(a, false, sizeof(a));
+	cin >> n >> m;
+	int k = n;
+	int i = 1, t = 0;  //i为序号,t为报数
+	while(k>0) { // 未出圈完毕
+		while(t<m) { //报数
+			if(a[i]==false) {
+				t++;  // 报数并增加1
+				if(t==m) {
+					a[i] = true;  // 出圈
+					cout << i << " ";  // 输出
+				}
+			}
+			i++;  // 序号增加1
+			if(i==n+1)  // 序号循环
+				i = 1;
+		}
+		t = 0; // 出圈后，归零，重新报数
+		k--;   // 未出圈人数减少一个
+	}
+	return 0;
+}
