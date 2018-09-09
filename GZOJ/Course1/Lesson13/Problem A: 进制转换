@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+	int n, r, c, a[100];
+	cin >> n >> r;
+	int i = 0;
+	if(n<0){
+		cout << "-";
+		n = -n;
+	}
+	while(n!=0){
+		a[++i] = n%r;
+		n /= r;
+	}
+	while(i>0){
+		if(a[i]>=10)
+			cout << (char) (a[i]-10+'A');
+		else
+			cout << a[i];
+		i--;
+	}
+	return 0;
+}
