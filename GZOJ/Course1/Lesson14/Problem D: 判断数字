@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool check(long long n, int d){
+	bool flag = false;
+	int x;
+	while(n!=0){
+		x = n%10;
+		if(x==d){
+			flag = true;
+			break;
+		}
+		n /= 10;
+	}
+	return flag;
+}
+
+int main(){
+	long long n;
+	int d;
+	cin >> n >> d;
+	if(check(n, d))
+		cout << "true";
+	else
+		cout << "false";
+	return 0;
+}
