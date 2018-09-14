@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool check(int x){
+	int sum = 0;
+	int t = sqrt(x); // 不能越过sqrt，否则会重复 
+	for(int i=2; i<=t; i++){ // 从2开始 
+		if(x%i==0){
+			sum += i;
+			if(i!=x/i)
+				sum += x/i;
+		}	
+	}
+	sum ++; // 1也是约数 
+	if(sum==x)
+		return true;
+	else
+		return false;
+}
+
+void change(int x){
+	int a[100], k = 0;;
+	while(x!=0){
+		a[++k] = x%16;
+		x /= 16;
+	}
+	for(int i=k; i>0; i--){
+		if(a[i]>9)
+			cout << (char)(a[i]-10+'A');
+		else
+			cout << a[i];
+	}
+	cout << " ";
+}
+
+int main(){
+	int x, y;
+	cin >> x >> y;
+	int cnt = 0;
+	for(int i=x; i<=y; i++){
+		if(check(i)){
+			change(i);
+			cnt ++;
+		}	
+	}
+	if(cnt==0)
+		cout << "no";
+	return 0;
+}
