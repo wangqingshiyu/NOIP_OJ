@@ -1,0 +1,12 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+	char ch;
+	int ans = 0;
+	while((ch=getchar())!= '#'){
+		if(ch=='b' || ch=='B' || ch=='m' || ch=='M')
+			ans ++;
+	}
+	cout << ans ;
+	return 0;
+} 
