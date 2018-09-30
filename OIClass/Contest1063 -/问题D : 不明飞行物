@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+	char s1[200], s2[200];
+	cin >> s1 >> s2;
+	int y1, y2;
+	y1 = y2 = 1;
+	for(int i=0; i<strlen(s1); i++)
+		y1 = y1*(s1[i]-'A'+1)%47;
+	for(int i=0; i<strlen(s2); i++)
+		y2 = y2*(s2[i]-'A'+1)%47;
+	if(y1==y2){
+		cout << "GO" << endl;
+		cout << "r1=r2=" << y1 << endl;
+	}
+	else{
+		cout << "STAY" << endl;
+		cout << "r1=" << y1 << " r2=" << y2 << endl;
+	}
+	return 0;
+} 
