@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int f(char c){
+	return c-'0';
+}
+
+int main(){
+	char s[20];
+	cin >> s;
+	int ans = s[12]-'0';
+	int sum = f(s[0])*1+f(s[2])*2+f(s[3])*3+f(s[4])*4+f(s[6])*5+f(s[7])*6+f(s[8])*7+f(s[9])*8+f(s[10])*9;
+	sum %= 11;
+	if((sum==10 && s[12]=='X') || (sum!=10 && sum==ans))
+		cout << "Right";
+	else{
+		for(int i=0; i<12; i++)
+			cout << s[i];
+		if(sum<10)
+			cout << sum;
+		else
+			cout << 'X';
+	}
+	return 0;
+} 
