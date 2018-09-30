@@ -1,0 +1,17 @@
+// getchar() 方式
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+	int ch;
+	int a[26] = {1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 1, 2, 3, 4};  // 打表
+	int ans = 0;
+	while((ch = getchar()) != EOF){ // 注意EOF对应的数值是int
+		if(ch==' ') // 空格
+			ans ++;
+		if(ch>='a' && ch<='z'){
+			ans += a[ch-'a'];
+		}
+	}
+	cout << ans;
+	return 0;
+} 
