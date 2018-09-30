@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+char s[110][110];
+int n, m, a[110][110];
+int d[8][2] = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+int find(int x, int y){
+    int ans = 0;
+    for(int i=0; i<8; i++){
+        int tx = x+d[i][0];
+        int ty = y+d[i][1];
+        if(s[tx][ty]=='*')
+            ans ++;
+    }
+    return ans;
+}
+ 
+ 
+int main(){
+    cin >> n >> m;
+    for(int i=1; i<=n; i++)
+        for(int j=1; j<=m; j++)
+            cin >> s[i][j];
+    for(int i=1; i<=n; i++)
+        for(int j=1; j<=m; j++){
+            if(s[i][j]=='.')
+                a[i][j] = find(i, j);
+        }
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=m; j++){
+            if(s[i][j]=='*')
+                cout << '*';
+            else
+                cout << a[i][j];
+        }
+        cout << endl;
+    }       
+    return 0;
+}
