@@ -1,0 +1,27 @@
+#include <iostream>
+#include <cstring>
+#include <string>
+using namespace std;
+int main(){
+	string s, st;
+	int len, maxlen;
+	len = maxlen = 0;
+	bool flag = false;
+	while(cin >> s){ //自动过滤“空格”
+		if(s.find('a') != s.npos){ // 能找到
+			flag = true;
+			len = s.size();
+			if(len>maxlen){
+				maxlen = len;
+				st = s; 
+			}
+		}	
+	}
+	if(st.find('.') != st.npos)
+		st.erase(len-1, 1);  // 删除'.'
+	if(flag)
+		cout << st;
+	else
+		cout << "NO";
+	return 0;
+}
