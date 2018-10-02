@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+	char ch, s1[200], s2[200];
+	int len, maxlen;
+	bool flag, pd;
+	pd = flag = false;
+	len = maxlen;
+	while((ch=getchar()) != '.'){
+		if(ch != ' '){
+			s1[len++] = ch;
+			if(ch=='a' || ch=='A'){
+				pd = true;
+				flag = true;
+			}
+			if(flag && len>maxlen){
+					maxlen = len;
+					strcpy(s2, s1);
+			}
+		}
+		else{
+			len = 0;
+			flag = false;
+		}
+	}
+	if(pd)
+		cout << s2;
+	else
+		cout << "NO";
+	return 0;
+} 
