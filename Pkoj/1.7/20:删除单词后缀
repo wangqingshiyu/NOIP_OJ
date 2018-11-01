@@ -9,7 +9,7 @@ int main(){
 		cout << s;
 		return 0;
 	}
-	if(s.rfind("ing") == len-3)
+	if(s.rfind("ing") == len-3) // find是从前面开始找到第一个，rfind是从后面查找到第一个，即为最后一个
 		s.erase(len-3, 3);
 	else{
 		if(s.rfind("er") == len-2)
