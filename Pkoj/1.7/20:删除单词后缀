@@ -1,0 +1,22 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int main(){
+	string s;
+	cin >> s;
+	int len = s.size();
+	if(len<=2){ // 题目保证删除后不为空，小于2是为了防止后面len-3为负数
+		cout << s;
+		return 0;
+	}
+	if(s.rfind("ing") == len-3)
+		s.erase(len-3, 3);
+	else{
+		if(s.rfind("er") == len-2)
+			s.erase(len-2, 2);
+		else if(s.rfind("ly") == len-2)
+				s.erase(len-2, 2);
+	}
+	cout << s;
+	return 0;
+}
