@@ -1,0 +1,32 @@
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+using namespace std;
+char s[40];
+int len;
+
+bool Mod(int x){
+	int i = 0, t = 0;
+	while(i<len){
+		t = t*10+s[i++]-'0';
+		t = t%x;
+	}
+	if(t==0)
+		return true;
+	else
+		return false;
+}
+
+int main(){
+	cin >> s;
+	len = strlen(s);
+	int ans = 0;
+	for(int i=2; i<=9; i++)
+		if(Mod(i)){
+			ans ++;
+			cout << i << ' ';
+		}
+	if(ans==0)
+		cout << "none";		
+	return 0;
+}
