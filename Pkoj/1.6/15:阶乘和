@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+int n;
+int s1[1000], s2[1000];
+
+void jc(int x){
+	int jw = 0;
+	for(int i=1; i<=s2[0]; i++){
+		s2[i] = s2[i]*x+jw;
+		jw = s2[i]/10;
+		s2[i] %= 10;
+	}
+	while(jw>0){  //特别注意，因为进位数有可能超过10，可能是多位，因此要逐个放入
+		s2[0]++;
+		s2[s2[0]] = jw%10;
+		jw /= 10;
+	}
+}
+
+void add(){
+	int len = max(s1[0], s2[0]);
+	int jw = 0;
+	for(int i=1; i<=len; i++){
+		s1[i] = s1[i]+s2[i]+jw;
+		jw = s1[i]/10;
+		s1[i] %= 10;
+	}
+	s1[0] = len;
+	if(jw>0){
+		s1[0] = len+1;
+		s1[len+1] = jw;
+	}
+}
+
+int main(){
+	cin >> n;
+	s1[0] = 1;
+	s1[1] = 1;
+	s2[0] = 1;
+	s2[1] = 1;
+	for(int i=2; i<=n; i++){
+		jc(i);  // 阶乘，得到s2
+		add();  // 求和，即s1+s2
+	}
+	for(int i=s1[0]; i>=1; i--){
+		cout << s1[i];
+	}
+	return 0;
+} 
