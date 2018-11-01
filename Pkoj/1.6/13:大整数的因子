@@ -5,7 +5,7 @@ using namespace std;
 char s[40];
 int len;
 
-bool Mod(int x){
+bool Mod(int x){  // 相当于高精度除以低精度
 	int i = 0, t = 0;
 	while(i<len){
 		t = t*10+s[i++]-'0';
