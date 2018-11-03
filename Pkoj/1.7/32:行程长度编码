@@ -1,0 +1,25 @@
+// 与上一题类似
+#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+	string s;
+	cin >> s;
+	int len = s.size();
+	for(int i=0; i<len; i++)
+		if(s[i]>='a' && s[i]<='z')
+			s[i] += 'A'-'a';
+	int t = 1;
+	for(int i=0; i<len-1; i++){
+		if(s[i] == s[i+1])
+			t ++;
+		else{
+			cout << "(" << s[i] << "," << t << ")";
+			t = 1;
+		}
+	}
+	if(s[len-2] != s[len-1])
+		t = 1;
+	cout << "(" << s[len-1] << "," << t << ")";	
+	return 0;
+}
