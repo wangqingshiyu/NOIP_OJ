@@ -1,0 +1,24 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+	string s1, s2;
+	cin >> s1 >> s2;
+	int len1 = s1.size();
+	int len2 = s1.size();
+	s1 = s1 + s1;  // 构成环
+	s2 = s2 + s2;  // 构成环
+	int len = min(len1, len2);
+	for(int k=len; k>=1; k--) { //长度从大到小枚举
+		for(int i=0; i<len1; i++) { //第一个字符串，从头开始枚举
+			for(int j=0; j<len2; j++) { //第二个字符串，从头开始枚举
+				if(s1.substr(i, k) == s2.substr(j, k)){
+					cout << k;
+					return 0;
+				}
+			}
+		}
+	}
+	cout << 0;
+	return 0;
+}
