@@ -1,0 +1,78 @@
+// 细节题
+#include <iostream>
+#include <cstdio>
+#include <string>
+using namespace std;
+string s, st;
+int p1, p2, p3, t = 0;
+ 
+bool check (char x, char y) {
+    if(x>='a' && x<='z') { //同样为字母
+        if(y>='a' && y<='z' && x+1<y)  // 不能为后继
+            return true;
+    }
+    if(x>='0' && x<='9') { //同样为数字
+        if(y>='0' && y<='9' && x+1<y)  // 不能为后继
+            return true;
+    }
+    return false;
+}
+ 
+void print(char x, char y) {
+    char ch;
+    if(p1 == 2 && x>='a' && x<='z'){ //输出大写字母的条件，p1==2且字符是字母，数字也不行
+        x += 'A'-'a';
+        y += 'A'-'a';
+    }
+    if(p3 == 1) {   //顺序输出
+        for(char i=x+1; i<y; i++)
+            for(int j=1; j<=p2; j++){
+                if(p1 == 3)  // 输出*
+                    st = st + '*';
+                else
+                    st = st + i;
+            }
+                 
+    } else {     // 倒序输出
+        for(char i=y-1; i>x; i--)
+            for(int j=1; j<=p2; j++){
+                if(p1 == 3)  // 输出*
+                    st = st + '*';
+                else
+                    st = st + i;
+            }
+    }
+}
+ 
+int main() {    
+    cin >> p1 >> p2 >> p3;
+    cin >> s;
+    int len = s.size();
+    st = "";
+    int i = 1;   // 忽略开头的-
+    while(i<len-1) {  // 忽略结尾的-
+        if(s[i] == '-') {
+            int lent = max(0, i-t);       // substr()中，如果lent为负数，则会输出后续全部 
+            st = st + s.substr(t, lent);  // 拼接从开始到-前一个字符 
+            t = i+2;                      // 下一个开始的位置
+            if(s[i+1]-s[i-1] == 1) {      // 后继 
+                st = st + s[i+1];
+                i += 2;                   // 跳后两个
+                continue;
+            }
+            if(check(s[i-1], s[i+1])) {   // 满足展开的条件
+                print(s[i-1], s[i+1]);    // 展开
+                st = st + s[i+1];         // 拼接-后的那个字符
+            }
+            else
+                st = st + s[i] + s[i+1];  // 不符合展开条件，原样拼接
+            i += 2;                       // 跳后两个
+        }
+        else      // 没有-,继续往后
+        	i ++;
+    }
+    if(t<=len-1)  // -后的拼接
+        st = st + s.substr(t, len-t);
+    cout << st;
+    return 0;
+}
