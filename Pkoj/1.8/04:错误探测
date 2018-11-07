@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+int s[110][110], x[110], y[110];
+int main(){
+	int n, t;
+	cin >> n;
+	for(int i=1; i<=n; i++){
+		t = 0;
+		for(int j=1; j<=n; j++){
+			cin >> s[i][j];
+			if(s[i][j] == 1)
+				t ++;
+		}
+		if(t%2 == 0)  // 偶数就满足条件
+			x[i] = 1;  
+		x[0] += x[i]; // 统计满足条件的行数
+	}
+	for(int j=1; j<=n; j++){
+		t = 0;
+		for(int i=1; i<=n; i++)
+			if(s[i][j] == 1)
+				t ++;
+		if(t%2 == 0)
+			y[j] = 1;
+		y[0] += y[j];
+	}
+	if(x[0] == n && y[0] == n)  // 全部都满足
+		cout << "OK";
+	else if(x[0] == n-1 && y[0] == n-1){ // 只有一行一列需要更改
+			for(int i=1; i<=n; i++)
+				if(x[i] == 0){
+					cout << i << " ";
+					break;
+				}
+			for(int j=1; j<=n; j++)
+				if(y[j] == 0){
+					cout << j;
+					break;
+				}
+		} else
+			cout << "Corrupt";
+	return 0;
+}
