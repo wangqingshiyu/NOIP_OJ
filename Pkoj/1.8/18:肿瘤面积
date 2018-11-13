@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int maxn = 1010;
+int a[maxn][maxn];
+int sx, sy, n;
+
+void find(){
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=n; j++)
+			if(a[i][j] == 0){
+				sx = i;
+				sy = j;
+				return;
+			}
+}
+
+int main(){
+	cin >> n;
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=n; j++)
+			cin >> a[i][j];
+	find();
+	int l = 0, w = 0;
+	for(int i=sx+1; i<=n; i++){
+		if(a[i][sy] == 0)
+			l ++;
+		else
+			break;
+	}
+	for(int j=sy+1; j<=n; j++){
+		if(a[sx][j] == 0)
+			w ++;
+		else
+			break;
+	}	
+	cout << (l-1)*(w-1);	
+	return 0;
+}
