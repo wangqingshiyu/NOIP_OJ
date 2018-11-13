@@ -1,0 +1,57 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+char a[110][110], b[110][110];
+
+void bt(int x1, int y1, int x2, int y2){ // 战斗
+	char x = a[x1][y1];
+	char y = a[x2][y2];
+	if(x != y){
+		if(x == 'R'){
+			if(y == 'S')
+				b[x2][y2] = 'R';
+			else // y == 'P'
+				b[x1][y1] = 'P';
+		}
+		if(x == 'S'){
+			if(y == 'P')
+				b[x2][y2] = 'S';
+			else // y == 'R'
+				b[x1][y1] = 'R';
+		}
+		if(x == 'P'){
+			if(y == 'R')
+				b[x2][y2] = 'P';
+			else // y == 'S'
+				b[x1][y1] = 'S';
+		}
+	}
+}
+
+int main(){
+
+	int r, c, n;
+	cin >> r >> c >> n;
+	for(int i=1; i<=r; i++)
+		for(int j=1; j<=c; j++)
+			cin >> a[i][j]; // char类型时，没有空格也可以用cin读入
+	for(int k=1; k<=n; k++){
+		memcpy(b, a, sizeof(a));  // 将a复制到b, b=a
+		for(int i=1; i<r; i++){ // 向下与向右战斗
+			for(int j=1; j<c; j++){
+				bt(i, j, i+1, j);
+				bt(i, j, i, j+1);
+			}
+			bt(i, r, i+1, r); // 最右一列，向下战斗
+		}
+		for(int j=1; j<c; j++) //最下一列，向右战斗
+			bt(r, j, r, j+1);	
+		memcpy(a, b, sizeof(b)); // 将b复制到a, a=b
+	} 
+	for(int i=1; i<=r; i++){
+		for(int j=1; j<=c; j++)
+			cout << a[i][j];
+		cout << endl;
+	}
+	return 0;
+}
