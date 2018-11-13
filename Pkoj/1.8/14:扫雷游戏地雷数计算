@@ -1,0 +1,41 @@
+#include <iostream>
+#include <cmath>
+#include <cstring>
+using namespace std;
+int main(){
+	int a[110][110];
+	char p[110][110];
+	string s[110];
+	int d[8][2] = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+	memset(a, 0, sizeof(a));
+	int m, n;
+	cin >> n >> m;
+	for(int i=1; i<=n; i++)
+		cin >> s[i];
+	for(int i=1; i<=n; i++){  // 数据处理，将0挪到1，方便统一操作
+		for(int j=0; j<m; j++)
+			if(s[i][j] == '*')
+				a[i][j+1] = -1;
+			else
+				a[i][j+1] = 0;
+	}
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=m; j++){
+			if(a[i][j] == 0){
+				p[i][j] = '0';     // 用字符型，是因为后面有一个是'*'
+				for(int k=0; k<8; k++){ // 统计周围八个位置
+					int dx = i+d[k][0];
+					int dy = j+d[k][1];
+					if(a[dx][dy] == -1)
+						p[i][j] ++;
+				}
+			}else
+				p[i][j] = '*';
+		}
+	for(int i=1; i<=n; i++){
+		for(int j=1; j<=m; j++)
+			cout << p[i][j];
+		cout << endl;
+	}
+	return 0;
+}
