@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+char s[110][110];
+bool p[110][110];
+int main() {
+	int r, c;
+	cin >> r >> c;
+	for(int i=1; i<=r; i++)
+		for(int j=1; j<=c; j++)
+			cin >> s[i][j];
+	int ans = 0;
+	for(int i=1; i<=r; i++) {
+		for(int j=1; j<=c; j++)
+			if(!p[i][j] && s[i][j] == '#') {
+				ans ++;
+				p[i][j] = true;
+				if(s[i+1][j] == '#')
+					p[i+1][j] = true;
+				if(s[i][j+1] == '#')
+					p[i][j+1] = true;
+			}
+	}
+	cout << ans;
+	return 0;
+}
