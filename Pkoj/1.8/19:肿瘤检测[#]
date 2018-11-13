@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int maxn = 110;
+int a[maxn][maxn], n;
+int d[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+int main(){
+	cin >> n;
+	int x, s = 0, c = 0;
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=n; j++){
+			cin >> x;
+			if(x<=50)
+				a[i][j] = 1;
+			else
+				a[i][j] = 0;
+		}
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=n; j++){
+			if(a[i][j]){
+				s ++;
+				bool flag = false;
+				for(int k=0; k<4; k++){
+					int dx = i+d[k][0];
+					int dy = j+d[k][1];
+					if(a[dx][dy] == 0){
+						flag = true;
+						break;
+					}
+				}
+				if(flag)
+					c ++;
+			}
+		}
+	cout << s << " " << c;
+	return 0;
+}
