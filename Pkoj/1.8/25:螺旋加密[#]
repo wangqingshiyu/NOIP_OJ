@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+int a[25][25], used[25][25], b[410], k, r, c;
+
+void change(char ch){// 转成5位的二进制 
+	int t, x[5], tmp = 5;
+	memset(x, 0, sizeof(x));
+	if(ch == ' ')
+		t = 0;
+	else
+		t = ch-'A'+1;
+	while(t){
+		x[--tmp] = t%2;
+		t /= 2;
+	}
+	for(int i=0; i<5; i++)
+		b[++k] = x[i];
+}
+
+void fill(){
+	int t, i, j;
+	t = i = j = 1;
+	a[i][j] = b[t++];
+	used[i][j] = 1;
+	while(t<=k){
+		while(!used[i][j+1] && j+1<=c) { //不能直接用a[i][j]==0判定是否填过，因为a[i][j]有可能填充的就是0 
+			a[i][++j] = b[t++];
+			used[i][j] = 1;
+		}	
+		while(!used[i+1][j] && i+1<=r) {
+			a[++i][j] = b[t++];
+			used[i][j] = 1;
+		}	
+		while(!used[i][j-1] && j-1>=1) {
+			a[i][--j] = b[t++];
+			used[i][j] = 1;
+		}	
+		while(!used[i-1][j] && i-1>=1) {
+			a[--i][j] = b[t++];
+			used[i][j] = 1;
+		}
+	}
+}
+
+int main(){
+	string s;
+	cin >> r >> c;
+	getchar();  //过滤空格 
+	getline(cin, s);
+	for(int i=0; i<s.size(); i++)
+		change(s[i]);	
+	fill();
+	for(int i=1; i<=r; i++)
+		for(int j=1; j<=c;j++)
+			cout << a[i][j];
+	return 0;
+}
