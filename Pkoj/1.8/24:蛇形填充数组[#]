@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+	int a[20][20], n, x, y, k = 1;
+	cin >> n;
+	for(int i=2; i<=n+1; i++){ // 左上部分
+		if(i%2 == 0){ // 从左下往右上填
+			for(int j=1; j<i; j++){ 
+				y = j;
+				x = i-y;
+				a[x][y] = k++;
+			}	
+		}else{ // 从右上往左下填
+			for(int j=1; j<i; j++){ 
+				x = j;
+				y = i-x;
+				a[x][y] = k++;
+			}	
+		}
+	}
+	for(int i=n+2; i<=2*n; i++){ // 右下部分 
+		if(i%2 == 0){ // 从左下往右下填
+			for(int j=i-n; j<=n; j++){
+				y = j;
+				x = i-y;
+				a[x][y] = k++;
+			}	
+		}else{  //从右上往左下填
+			for(int j=i-n; j<=n; j++){
+				x = j;
+				y = i-x;
+				a[x][y] = k++;
+			}	
+		}
+	}
+	for(int i=1; i<=n; i++){
+		for(int j=1; j<=n; j++)
+			cout << a[i][j] << " ";
+		cout << endl;
+	}
+	return 0;
+}
