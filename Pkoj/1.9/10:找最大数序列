@@ -1,0 +1,46 @@
+//本题难在不能直接用cin/scanf读入，而应该用字符读入getchar
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+	char ch;	
+	int a[40][110], n, x, t;
+	cin >> n;
+	string s;   // 过滤换行 
+	getline(cin, s); // 过滤换行 
+	for(int i=1; i<=n; i++){
+		t = 0;
+		int j = 0;
+		while( (ch=getchar()) != '\n'){ // 到行末 
+			if(ch == ','){
+				a[i][++j] = t;
+				t = 0;
+			}else{
+				x = ch-'0';
+				t = t*10+x;
+			}
+		}
+		a[i][++j] = t; // 最后一个 
+		a[i][0] = j;   // 记录本行有多少个数 
+	}
+	int maxx = -1000;
+	for(int i=1; i<=n; i++){
+		for(int j=1; j<=a[i][0]; j++)
+			if(a[i][j] > maxx)
+				maxx = a[i][j];
+	}
+	cout << maxx << endl;
+	bool first = true;
+	for(int i=1; i<=n; i++){
+		for(int j=1; j<=a[i][0]; j++)
+			if(a[i][j] == maxx){
+				if(first){
+					cout << i;
+					first = false;
+				}
+				else	
+					cout << "," << i;
+				break;  // 只输出一次 
+			}		
+	}
+	return 0;
+} 
