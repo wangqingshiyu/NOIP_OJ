@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+ 
+bool check(int x){
+    if(x<=1)
+        return false;
+    for(int i=2; i<=x/2; i++)
+        if(x%2 == 0)
+            return false;
+    return true;    
+}
+ 
+int main(){
+    string s;
+    cin >> s;
+    int len = s.size();
+    int c[26];
+    memset(c, 0, sizeof(c));
+    for(int i=0; i<len; i++){
+        c[s[i]-'a'] ++;
+    }
+    int maxx = 0, minx = len+1;
+    for(int i=0; i<26; i++){
+        if(c[i]>maxx)
+            maxx = c[i];
+        if(c[i]<minx && c[i]>0)
+            minx = c[i];
+    }
+    int ans = maxx-minx;
+    if(check(ans)){
+        cout << "Lucky Word\n";
+        cout << ans;
+    }
+    else{
+        cout << "No Answer\n";
+        cout << 0;
+    }
+    return 0;
+}
