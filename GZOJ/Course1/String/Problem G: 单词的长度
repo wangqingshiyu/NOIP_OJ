@@ -1,0 +1,17 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main(){
+    char s[310];
+    bool first = true;
+    while(cin>>s){
+        if(first){
+            cout << strlen(s);
+            first = false;
+        }   
+        else{
+            cout << "," << strlen(s);
+        }
+    }
+    return 0;
+} 
