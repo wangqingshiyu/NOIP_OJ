@@ -1,0 +1,25 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int main(){
+    string ss;
+    cin >> ss;
+    int s[20];
+    for(int i=0; i<=12; i++)
+        s[i] = ss[i]-'0';
+    long long sum = s[0]*1+s[2]*2+s[3]*3+s[4]*4+s[6]*5+s[7]*6+s[8]*7+s[9]*8+s[10]*9;
+    int x = sum % 11;
+    char ch;
+    if(x == 10)
+        ch = 'X';
+    else
+        ch = x+'0';
+    if(ch == ss[12])
+        cout << "Right";
+    else{
+        for(int i=0; i<12; i++)
+            cout << ss[i];
+        cout << ch;
+    }
+    return 0;
+}
