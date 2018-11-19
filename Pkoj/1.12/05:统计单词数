@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int main(){
+    string s1, s2;
+    getline(cin, s1);
+    getline(cin, s2);
+    for(int i=0; i<s1.size(); i++)
+        if(s1[i]>='A' && s1[i]<='Z')
+            s1[i] += 'a'-'A';
+    for(int i=0; i<s2.size(); i++)
+        if(s2[i]>='A' && s2[i]<='Z')
+            s2[i] += 'a'-'A';
+    s1 = " " + s1 + " ";
+    s2 = " " + s2 + " ";
+    int ans = 0, pos = -1, t = 0;
+    while(s2.find(s1, t) != s2.npos){ // 从t的位置开始找起，节省时间，否则当时间长时会超时
+        t = s2.find(s1, t);
+        if(pos == -1)
+            pos = t;
+        ans ++;
+        t ++;
+        if(t+s1.size()>=s2.size())
+            break;
+    }
+    if(ans == 0)
+        cout << -1;
+    else
+        cout << ans << " " << pos;
+    return 0;
+} 
