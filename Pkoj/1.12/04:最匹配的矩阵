@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+int a[110][110], b[110][110], m, n, r, s;
+
+int f(int x, int y){
+	int sum = 0, big, small;
+	for(int i=x; i<=x+r-1; i++)
+		for(int j=y; j<=y+s-1; j++){
+			if(a[i][j]>b[i-x+1][j-y+1]){
+				big = a[i][j];
+				small = b[i-x+1][j-y+1];
+			}else{
+				big = b[i-x+1][j-y+1];
+				small = a[i][j];
+			}
+			sum += big-small;
+		}
+	return sum;
+}
+
+int main(){
+	cin >> m >> n;
+	for(int i=1; i<=m; i++)
+		for(int j=1; j<=n; j++)
+			cin >> a[i][j];
+	cin >> r >> s;
+	for(int i=1; i<=r; i++)
+		for(int j=1; j<=s; j++)
+			cin >> b[i][j];
+	int minx = 99999999, x, y;
+	for(int i=1; i<=m-r+1; i++)
+		for(int j=1; j<=n-s+1; j++){
+			int t = f(i, j);
+			if(t < minx){
+				minx = t;
+				x = i;
+				y = j;
+			}
+		}	
+	for(int i=x; i<=x+r-1; i++){
+		for(int j=y; j<=y+s-1; j++)
+			cout << a[i][j] << " ";
+		cout << endl;
+	}	
+	return 0;
+} 
