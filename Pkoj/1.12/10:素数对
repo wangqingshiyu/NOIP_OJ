@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+bool pr[10010];
+
+void pre(){  // 筛法求素数，打表
+	memset(pr, true, sizeof(pr));
+	pr[1] = false;
+	for(int i=2; i<=100; i++){
+		if(pr[i]){
+			int t = 10000/i;
+			for(int j=2; j<=t; j++)
+				pr[i*j] = false;
+		}
+	}
+}
+
+int main(){
+	pre();
+	int n, ans = 0;
+	cin >> n;
+	for(int i=2; i<=n-2; i++)
+		if(pr[i] && pr[i+2]){
+			ans ++;
+			cout << i << " " << i+2 << endl;
+		}
+	if(ans == 0)
+		cout << "empty";
+	return 0;
+} 
