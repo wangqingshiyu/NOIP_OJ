@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+	int a[26];
+	memset(a, 0, sizeof(a));
+	char ch;
+	while((ch = getchar()) != EOF)
+		if(ch>='A' && ch<='Z')
+			a[ch-'A'] ++;
+	int maxx = 0;
+	for(int i=0; i<26; i++)
+		if(a[i]>maxx)
+			maxx = a[i];
+	char s[maxx][30];
+	for(int i=0; i<maxx; i++)
+		for(int j=0; j<29; j++)
+			s[i][j] = ' ';
+	for(int j=0; j<26; j++)
+		for(int i=1; i<=a[j]; i++)
+			s[maxx-i][j] = '*';
+	for(int i=0; i<maxx; i++){
+		for(int j=0; j<26; j++)
+			cout << s[i][j] << " ";
+		cout << endl;
+	}
+	for(int i=0; i<26; i++)
+		cout << (char)(i+'A') << " ";
+	return 0;
+}
