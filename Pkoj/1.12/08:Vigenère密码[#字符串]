@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+	string s1, s2;
+	char ch;
+	int a[110], len1, len2, k;
+	cin >> s1 >> s2;
+	len1 = s1.size();
+	len2 = s2.size();
+	for(int i=0; i<len1; i++){
+		if(s1[i]>='A' && s1[i]<='Z')
+			a[i] = s1[i]-'A';
+		else
+			a[i] = s1[i]-'a';
+	}
+	for(int i=0; i<len2; i++){
+		k =  i%len1;
+		ch = s2[i]-a[k];
+		if((s2[i]>='A' && s2[i]<='Z' && ch<'A') || (s2[i]>='a' && s2[i]<='z' && ch<'a'))
+			ch += 26;
+		cout << ch;
+	}
+	return 0;
+}
