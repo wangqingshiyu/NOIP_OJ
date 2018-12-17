@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+int m, n, a[110][110], b[110][110];
+string s;
+
+void f(char ch) {
+	int t;
+	if(ch == 'A' || ch == 'B') {
+		t = m;
+		m = n;
+		n = t;
+		if(ch == 'A') {
+			for(int i=1; i<=n; i++)
+				for(int j=1; j<=m; j++)
+					b[j][n+1-i] = a[i][j];
+		} else {
+			for(int i=1; i<=n; i++)
+				for(int j=1; j<=m; j++)
+					b[m+1-j][i] = a[i][j];
+		}
+	} else {
+		if(ch == 'C') {
+			for(int i=1; i<=m; i++)
+				for(int j=1; j<=n; j++)
+					b[i][n+1-j] = a[i][j];
+		} else {
+			for(int i=1; i<=m; i++)
+				for(int j=1; j<=n; j++)
+					b[m+1-i][j] = a[i][j];
+		}
+	}
+	memcpy(a, b, sizeof(a));
+}
+
+int main() {
+	cin >> m >> n;
+	for(int i=1; i<=m; i++)
+		for(int j=1; j<=n; j++)
+			cin >> a[i][j];
+	cin >> s;
+	for(int i=0; i<s.size(); i++)
+		f(s[i]);
+	for(int i=1; i<=m; i++) {
+		for(int j=1; j<=n; j++)
+			cout << a[i][j] << " ";
+		cout << endl;
+	}
+	return 0;
+}
