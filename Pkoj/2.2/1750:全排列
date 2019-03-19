@@ -1,0 +1,31 @@
+//深搜模板题
+#include <iostream>
+#include <cstring>
+using namespace std;
+char s[20], st[20];
+bool vis[20];
+int n;
+
+void dsf(int x){
+	if(x==n){
+		for(int i=0; i<n; i++)
+			cout << st[i];
+		cout << endl;
+		return;
+	}
+	for(int i=0; i<n; i++){
+		if(!vis[i]){
+			st[x] = s[i];
+			vis[i] = true;
+			dsf(x+1);
+			vis[i] = false;
+		}
+	}
+}
+
+int main(){
+	cin >> s;
+	n = strlen(s);
+	dsf(0);
+	return 0;
+}
