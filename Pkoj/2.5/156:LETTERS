@@ -1,0 +1,41 @@
+// DSF模板题，八皇后的简单版
+#include <bits/stdc++.h>
+using namespace std;
+char s[25][25];
+bool v[26];
+int r, c, ans;
+int d[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+bool check(int x, int y){
+	if(x<1 || x>r || y<1 || y>c)
+		return false;
+	int u = s[x][y]-'A';
+	return v[u];
+}
+
+void dsf(int x, int y, int cnt){
+	if(ans<cnt) // max ans 
+		ans = cnt;
+	for(int i=0; i<4; i++){
+		int tx = x+d[i][0];
+		int ty = y+d[i][1];
+		int u = s[tx][ty]-'A';
+		if(check(tx, ty)){
+			v[u] = false;
+			dsf(tx, ty, cnt+1);
+			v[u] = true;
+		}	
+	}
+}
+
+int main(){
+	cin >> r >> c;
+	for(int i=1; i<=r; i++)
+		for(int j=1; j<=c; j++){
+			cin >> s[i][j];
+		}
+	memset(v, true, sizeof(v));
+	v[s[1][1]-'A'] = false;		
+	dsf(1, 1, 1);
+	cout << ans;
+}
