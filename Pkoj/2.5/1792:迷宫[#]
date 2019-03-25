@@ -1,0 +1,52 @@
+// 地图搜索模板题
+#include <bits/stdc++.h>
+using namespace std;
+int sx, sy, ex, ey, tx, ty;
+bool s[110][110], flag;
+int d[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+bool dfs(int x, int y){
+	if(x==ex && y==ey){
+		return true;
+	}
+	for(int i=0; i<4; i++){
+		tx = x+d[i][0];
+		ty = y+d[i][1];
+		if(s[tx][ty]){
+			s[tx][ty] = false;
+			if(dfs(tx, ty))
+				return true;
+		}
+	}
+	return false;
+}
+
+int main(){
+	int k, n;
+	char ch;
+	cin >> k;
+	while(k--){
+		cin >> n;
+		memset(s, false, sizeof(s));
+		flag = false;
+		for(int i=1; i<=n; i++)
+			for(int j=1; j<=n; j++){
+				cin >> ch;
+				if(ch=='.')
+					s[i][j] = true;
+			}
+		cin >> sx >> sy >> ex >> ey;
+		sx++; sy++; ex++; ey++;
+		if(!s[sx][sy] || !s[ex][ey]){
+			printf("NO\n");
+			continue;
+		}
+		s[sx][sy] = false;
+		flag = dfs(sx, sy);
+		if(flag)
+			printf("YES\n");
+		else
+			printf("NO\n");	
+	}
+	return 0;
+}
