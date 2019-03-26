@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+int r, c, ans, cnt;
+bool s[50][50];
+int d[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+void dfs(int x, int y){
+	if(x==r && y==c){
+		if(cnt<ans)
+			ans = cnt;
+		return;
+	}
+	for(int i=0; i<4; i++){
+		int tx = d[i][0]+x;
+		int ty = d[i][1]+y;
+		if(s[tx][ty]){
+			s[tx][ty] = false;
+			cnt++;
+			dfs(tx, ty);
+			cnt--;
+			s[tx][ty] = true;
+		}
+	}
+}
+
+int main(){
+	char ch;
+	cin >> r >> c;
+	for(int i=1; i<=r; i++)
+		for(int j=1; j<=c; j++){
+			cin >> ch;
+			if(ch=='.')
+				s[i][j] = true;
+		}
+	ans = 99999999, cnt = 1;
+	dfs(1, 1);
+	cout << ans;
+	return 0;
+}
