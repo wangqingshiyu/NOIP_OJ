@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct node{
+	int x, y;
+	int step;
+};
+queue <node> q;
+int r, c, a[50][50];
+bool s[50][50];
+int d[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+int main(){
+	char ch;
+	cin >> r >> c;
+	for(int i=1; i<=r; i++)
+		for(int j=1; j<=c; j++){
+			cin >> ch;
+			if(ch=='.')
+				s[i][j] = true;
+		}
+	q.push((node){1, 1, 1});
+	s[1][1] = false;
+	a[1][1] = 1;
+	bool flag = false;
+	while(!q.empty()){
+		node u = q.front();
+		q.pop();
+		if((u.x==r && u.y==c) || flag)
+			break;
+		for(int i=0; i<4; i++){
+			int tx = d[i][0]+u.x;
+			int ty = d[i][1]+u.y;
+			if(s[tx][ty]){
+				q.push((node){tx, ty, u.step+1});
+				a[tx][ty] = u.step+1;
+				s[tx][ty] = false;
+				if(tx==r && ty==c){
+					flag = true;
+					break;
+				}
+			}
+		}
+	}
+	cout << a[r][c] << endl;
+	return 0;
+}
