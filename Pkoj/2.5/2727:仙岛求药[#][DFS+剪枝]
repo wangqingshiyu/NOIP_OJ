@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int INS = 9999999;
+bool s[25][25];
+int d[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+int n, m, ans, sx, sy, ex, ey, a[25][25];
+
+void dfs(int x, int y, int step) {
+	if(x==ex && y==ey) {
+		if(step<ans)
+			ans = step;
+		return;
+	}
+	for(int i=0; i<4; i++) {
+		int tx = x+d[i][0];    //用局部变量，不用用全局变量，全局变量会出错
+		int ty = y+d[i][1];
+		if(s[tx][ty] && step<a[tx][ty]) { // 如果路径值比之前的还大，那么剪枝
+			s[tx][ty] = false;
+			a[tx][ty] = step;     // 记录下当前的路径值
+			dfs(tx, ty, step+1);
+			s[tx][ty] = true;
+		}
+	}
+}
+
+int main() {
+	while(1) {
+		cin >> n >> m;
+		if(n==0 && m==0)
+			break;
+		char ch;
+		memset(s, false, sizeof(s));
+		for(int i=1; i<=n; i++)
+			for(int j=1; j<=m; j++)
+				a[i][j] = INS;
+		for(int i=1; i<=n; i++)
+			for(int j=1; j<=m; j++) {
+				cin >> ch;
+				if(ch=='.')
+					s[i][j] = true;
+				if(ch=='@') {
+					sx = i;
+					sy = j;
+				}
+				if(ch=='*') {
+					s[i][j] = true;
+					ex = i;
+					ey = j;
+				}
+			}
+		ans = INS;
+		dfs(sx, sy, 0);
+		if(ans == INS)
+			ans = -1;
+		cout << ans << endl;
+	}
+	return 0;
+}
