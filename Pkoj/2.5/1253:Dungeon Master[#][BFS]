@@ -1,0 +1,64 @@
+// 三维BFS，需要特别注意找准坐标走向及对应关系
+#include <bits/stdc++.h>
+using namespace std;
+struct mp {
+	int x, y, z;
+	int step;
+};
+queue <mp> q;
+int z, n, m, sx, sy, sz, ex, ey, ez, ans;
+int d[6][3] = {{0, 0, -1}, {0, 0, 1}, {0, -1, 0}, {0, 1, 0}, {1, 0, 0}, {-1, 0, 0}};
+bool s[40][40][40];
+int main() {
+	while(cin >> z >> n >> m) {
+		if(z==0 && n==0 && m==0)
+			break;
+		memset(s, false, sizeof(s));
+		char ch;
+		for(int i=1; i<=z; i++)
+			for(int j=1; j<=n; j++)
+				for(int k=1; k<=m; k++) {
+					cin >> ch;
+					if(ch=='.')
+						s[i][j][k] = true;
+					if(ch=='S') {
+						sx = j;
+						sy = k;
+						sz = i;
+					}
+					if(ch=='E') {
+						s[i][j][k] = true;
+						ex = j;
+						ey = k;
+						ez = i;
+					}
+				}
+		ans = 99999999;
+		q.push((mp) {sx, sy, sz, 0});
+		while(!q.empty()) {
+			mp u = q.front();
+			q.pop();
+			for(int i=0; i<6; i++) {
+				int tx = u.x+d[i][0];
+				int ty = u.y+d[i][1];
+				int tz = u.z+d[i][2];
+				if(s[tz][tx][ty]) {
+					if(tx==ex && ty==ey && tz==ez) {
+						ans = u.step+1;
+						while(!q.empty())
+							q.pop();
+						break;
+					}
+					s[tz][tx][ty] = false;
+					q.push((mp) {tx, ty, tz, u.step+1});
+				}
+			}
+		}
+		if(ans==99999999)
+			cout << "Trapped!\n";
+		else
+			cout << "Escaped in " << ans << " minute(s).\n";
+	}
+
+	return 0;
+}
