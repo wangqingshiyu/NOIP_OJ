@@ -1,0 +1,42 @@
+// BFS 模板题
+#include <bits/stdc++.h>
+using namespace std;
+struct Water{
+	int x, y;
+};
+queue <Water> q;
+int n, m, ans;
+bool s[110][110];
+int d[8][2] = {{-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}};
+int main(){
+	cin >> n >> m;
+	char ch;
+	for(int i=1; i<=n; i++)
+		for(int j=1; j<=m; j++){
+			cin >> ch;
+			if(ch=='W')
+				s[i][j] = true;
+		}
+	for(int i=1; i<=n; i++){
+		for(int j=1; j<=m; j++)
+			if(s[i][j]){
+				s[i][j] = false;
+				ans ++;
+				q.push((Water){i, j});
+				while(!q.empty()){
+					Water u = q.front();
+					q.pop();
+					for(int i=0; i<8; i++){
+						int tx = u.x+d[i][0];
+						int ty = u.y+d[i][1];
+						if(s[tx][ty]){
+							s[tx][ty] = false;
+							q.push((Water){tx, ty});
+						}
+					}
+				}
+			}
+	}
+	cout << ans;
+	return 0;
+}
