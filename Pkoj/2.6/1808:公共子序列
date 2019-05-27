@@ -1,0 +1,19 @@
+#include <bits/stdc++.h>
+using namespace std;
+int d[210][210];  // d[i][j]: 表示字符串s1到i结尾、字符串2到j结尾时的最长公共子序列
+string s1, s2;
+int main(){
+	while(cin >> s1 >> s2){
+		int len1 = s1.size();
+		int len2 = s2.size();
+		memset(d, 0, sizeof(d));
+		for(int i=0; i<len1; i++)
+			for(int j=0; j<len2; j++)
+				if(s1[i]==s2[j])
+					d[i+1][j+1] = d[i][j]+1;
+				else
+					d[i+1][j+1] = max(d[i+1][j], d[i][j+1]);
+		cout << d[len1][len2] << endl;
+	}
+	return 0;
+} 
