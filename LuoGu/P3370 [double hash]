@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int B1 = 53, B2 = 151, M1 =999983 , M2 = 1000007;
+struct Dh{
+	int x, y;
+};
+Dh a[M2+10];
+
+int hash1(string s){
+	int len = s.size();
+	int h = 0;
+	for(int i=0; i<len; i++){
+		h = h*B1 + s[i];
+		h %= M1;
+	}
+	return h;
+}
+
+int hash2(string s){
+	int len = s.size();
+	int h = 0;
+	for(int i=0; i<len; i++){
+		h = h*B2 + s[i];
+		h %= M2;
+	}
+	return h;
+}
+
+bool cmp(const Dh &a, const Dh &b){
+	if(a.x == b.x)
+		return a.y < b.y;
+	return a.x < b.x;
+}
+
+int main(){
+	int n;
+	string s;
+	cin >> n;
+	for(int i=1; i<=n; i++){
+		cin >> s;
+		a[i].x = hash1(s);
+		a[i].y = hash2(s);
+	}
+	sort(a+1, a+n+1, cmp);
+	int ans = n;
+	for(int i=2; i<=n; i++){
+		if(a[i].x == a[i-1].x && a[i].y == a[i-1].y)
+			ans--;
+	}
+	cout << ans;
+	return 0;
+}
