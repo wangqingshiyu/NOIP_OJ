@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct stu{
+	string id, name, addr;
+	char male;
+	int age;
+	double score;
+	stu *next;
+};
+stu *h, *p;
+
+int main(){
+	string s;
+	h = new stu;
+	h->next = NULL;
+	while(cin >> s){
+		if(s=="end")
+			break;
+		p = new stu;
+		p->id = s;
+		cin >> p->name >> p->male >> p->age >> p->score >> p->addr;
+		p->next = h;
+		h = p;
+	}
+	p = h;
+	while(p->next != NULL){
+		cout << p->id << " " << p->name << " " << p->male << " " << p->age << " " << p->score << " " << p->addr << endl;
+		p = p->next;
+	}
+	return 0;
+}
