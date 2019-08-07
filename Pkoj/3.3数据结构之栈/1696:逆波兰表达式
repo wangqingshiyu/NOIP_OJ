@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+string str, st;
+double x, y;
+char ch;
+stack <string> tmp;
+stack <double> s;
+
+int main() {
+	getline(cin, str);
+	stringstream ss(str); // 字符串流
+	while(ss >> st)
+		tmp.push(st);  //为了从右到左扫描
+	while(!tmp.empty()){
+		st = tmp.top();
+		tmp.pop();
+		ch = st[0];
+		if(ch=='+' || ch=='-' || ch=='*' || ch=='/'){ //运算符，弹出栈中数据计算
+			x = s.top();
+			s.pop();
+			y = s.top();
+			s.pop();
+			switch(ch){
+				case '+': s.push(x+y); break;
+				case '-': s.push(x-y); break;
+				case '*': s.push(x*y); break;
+				case '/': s.push(x/y); break;
+			}
+		}
+		else{ // 浮点数，进行浮点数转化，并入栈
+			sscanf(st.c_str(), "%lf", &x);
+			s.push(x);
+		}
+	}
+	cout << fixed << setprecision(6) << s.top();
+	return 0;
+}
